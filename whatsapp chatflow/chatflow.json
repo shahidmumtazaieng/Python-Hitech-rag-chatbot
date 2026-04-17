@@ -1,0 +1,785 @@
+{
+  "flow_name": "HiTech_Professional_Customer_Support_Flow_v3",
+  "version": "3.0",
+  "company": "Hi-Tech Industrial Group",
+  "tagline": "Made in Saudi Arabia | Vision 2030 Partner",
+  "tone": "professional_humble_warm",
+  "language_support": ["en", "ar"],
+  "default_language": "en",
+  "api_version": "WhatsApp Business API v18.0",
+  "webhook_config": {
+    "endpoint": "https://your-domain.com/webhook/whatsapp",
+    "verify_token": "your_verify_token",
+    "events": ["messages", "message_deliveries", "message_reads"]
+  },
+  
+  "global_settings": {
+    "response_delay_ms": 800,
+    "typing_indicator": true,
+    "session_timeout_minutes": 30,
+    "fallback_attempts": 3,
+    "human_handoff_keywords": ["agent", "human", "speak", "manager", "supervisor", "complaint", "urgent", "emergency", "help", "support"],
+    "response_timeout_seconds": 120,
+    "max_retries": 3
+  },
+
+  "steps": {
+    "welcome": {
+      "type": "interactive_button",
+      "message_en": "Assalamu alaikum / Hello! 👋\n\nWelcome to *Hi-Tech Industrial Group* — a proud Saudi manufacturer serving the Kingdom with excellence since our establishment. 🇸🇦\n\nWe are truly honored by your visit. Our team is dedicated to providing you with premium steel solutions, security systems, and smart infrastructure — all proudly *Made in Saudi Arabia* in alignment with Vision 2030.\n\n*How may we serve you today?*\n\nPlease select your preferred language:",
+      "message_ar": "السلام عليكم ورحمة الله وبركاته 👋\n\nأهلاً وسهلاً بكم في *مجموعة هي تك الصناعية* — شركة وطنية سعودية تفخر بخدمة الوطن والعملاء منذ تأسيسها. 🇸🇦\n\nنحن ممتنون جداً لزيارتكم. فريقنا ملتزم بتقديم حلول فولاذية عالية الجودة، وأنظمة أمنية، وبنية تحتية ذكية — *صنع في السعودية* وتماشياً مع رؤية 2030.\n\n*كيف يمكننا خدمتكم اليوم؟*\n\nيرجى اختيار اللغة المفضلة:",
+      "buttons": [
+        { 
+          "id": "lang_en", 
+          "title_en": "🇬🇧 English", 
+          "title_ar": "🇬🇧 English" 
+        },
+        { 
+          "id": "lang_ar", 
+          "title_en": "🇸🇦 العربية", 
+          "title_ar": "🇸🇦 العربية" 
+        }
+      ],
+      "next": "main_menu",
+      "analytics_tag": "session_start"
+    },
+
+    "main_menu": {
+      "type": "interactive_list",
+      "header_en": "🏭 Hi-Tech Industrial Group",
+      "header_ar": "🏭 مجموعة هي تك الصناعية",
+      "body_en": "Thank you for connecting with us. We are grateful for the opportunity to serve you.\n\n*Our 7 Specialized Divisions:*\n\nPlease select the department you wish to explore. Our team of engineers is ready to assist with:\n• Technical consultations\n• Custom quotations\n• Project specifications\n• After-sales support",
+      "body_ar": "شكراً لتواصلكم معنا. نحن ممتنون لفرصة خدمتكم.\n\n*الأقسام المتخصصة السبعة:*\n\nيرجى اختيار القسم الذي ترغب في استكشافه. فريقنا الهندسي جاهز لمساعدتكم في:\n• الاستشارات الفنية\n• عروض الأسعار المخصصة\n• مواصفات المشاريع\n• الدعم ما بعد البيع",
+      "footer_en": "Made in KSA | ISO Certified | Vision 2030 Partner",
+      "footer_ar": "صنع في المملكة | معتمدة ISO | شريك رؤية 2030",
+      "button_text_en": "📋 View Our Services",
+      "button_text_ar": "📋 عرض خدماتنا",
+      "sections": [
+        {
+          "title_en": "🏠 Company Information",
+          "title_ar": "🏠 معلومات الشركة",
+          "rows": [
+            { 
+              "id": "menu_about", 
+              "title_en": "About Hi-Tech & General Inquiry", 
+              "title_ar": "عن هي تك والاستفسارات العامة",
+              "description_en": "Company profile, certifications, video tour",
+              "description_ar": "نبذة عن الشركة، الشهادات، جولة مصورة"
+            }
+          ]
+        },
+        {
+          "title_en": "🛡️ Security & Protection",
+          "title_ar": "🛡️ الأمن والحماية",
+          "rows": [
+            { 
+              "id": "menu_fencing", 
+              "title_en": "Fencing Solutions", 
+              "title_ar": "حلول التسييج",
+              "description_en": "HCIS & Aramco compliant perimeter security",
+              "description_ar": "أمن المحيط المتوافق مع أرامكو وهيس"
+            },
+            { 
+              "id": "menu_barrier", 
+              "title_en": "Security Barriers", 
+              "title_ar": "حواجز الأمن",
+              "description_en": "Access control, boom barriers, smart gates",
+              "description_ar": "التحكم بالدخول، حواجز بوابات ذكية"
+            }
+          ]
+        },
+        {
+          "title_en": "🏗️ Infrastructure & Engineering",
+          "title_ar": "🏗️ البنية التحتية والهندسة",
+          "rows": [
+            { 
+              "id": "menu_gabion", 
+              "title_en": "Gabion & Erosion Control", 
+              "title_ar": "الجبions والتحكم بالتآكل",
+              "description_en": "Retaining walls, ASTM certified solutions",
+              "description_ar": "جدران استنادية، حلول معتمدة ASTM"
+            },
+            { 
+              "id": "menu_galvanizing", 
+              "title_en": "Spin Galvanizing", 
+              "title_ar": "التغليف الدوار",
+              "description_en": "Small parts galvanizing, fasteners, clamps",
+              "description_ar": "تغليف القطع الصغيرة، مسامير، مشابك"
+            }
+          ]
+        },
+        {
+          "title_en": "🏢 Building Solutions",
+          "title_ar": "🏢 حلول البناء",
+          "rows": [
+            { 
+              "id": "menu_upvc", 
+              "title_en": "UPVC Doors & Windows", 
+              "title_ar": "أبواب ونوافذ UPVC",
+              "description_en": "Maskni brand, energy-efficient solutions",
+              "description_ar": "علامة Maskni، حلول موفرة للطاقة"
+            },
+            { 
+              "id": "menu_racks", 
+              "title_en": "Racks & Partitions", 
+              "title_ar": "الرفوف والفواصل",
+              "description_en": "Storage systems, office partitions",
+              "description_ar": "أنظمة التخزين، فواصل المكاتب"
+            }
+          ]
+        },
+        {
+          "title_en": "🚻 Smart Solutions",
+          "title_ar": "🚻 الحلول الذكية",
+          "rows": [
+            { 
+              "id": "menu_smart", 
+              "title_en": "Smart Automatic Toilets", 
+              "title_ar": "المراحيض الذكية الأوتوماتيكية",
+              "description_en": "Self-cleaning, Italian-designed systems",
+              "description_ar": "أنظمة ذاتية التنظيف، تصميم إيطالي"
+            }
+          ]
+        },
+        {
+          "title_en": "💬 Direct Support",
+          "title_ar": "💬 الدعم المباشر",
+          "rows": [
+            { 
+              "id": "menu_speak", 
+              "title_en": "Speak to Sales Engineer", 
+              "title_ar": "التحدث مع مهندس المبيعات",
+              "description_en": "Immediate human assistance",
+              "description_ar": "مساعدة بشرية فورية"
+            },
+            { 
+              "id": "menu_other", 
+              "title_en": "Other / Technical Support", 
+              "title_ar": "أخرى / الدعم الفني",
+              "description_en": "Special requirements, complaints, feedback",
+              "description_ar": "متطلبات خاصة، شكاوى، ملاحظات"
+            }
+          ]
+        }
+      ],
+      "next_logic": {
+        "menu_about": "about_submenu",
+        "menu_fencing": "fencing_submenu",
+        "menu_gabion": "gabion_submenu",
+        "menu_upvc": "upvc_submenu",
+        "menu_barrier": "barrier_submenu",
+        "menu_galvanizing": "galvanizing_submenu",
+        "menu_racks": "racks_submenu",
+        "menu_smart": "smart_submenu",
+        "menu_speak": "speak_engineer",
+        "menu_other": "other_support"
+      }
+    },
+
+    "about_submenu": {
+      "type": "interactive_button",
+      "header_en": "About Hi-Tech Industrial Group",
+      "header_ar": "عن مجموعة هي تك الصناعية",
+      "body_en": "We are a *Saudi-owned and operated* industrial group headquartered in Riyadh, serving the Kingdom with pride and dedication.\n\n*Our Legacy:*\n• Premium steel-based industrial solutions\n• 7 specialized verticals under one umbrella\n• Vision 2030 aligned & locally manufactured\n• Serving Oil & Gas, Infrastructure, Government & Private sectors\n\n*How may we assist you today?*",
+      "body_ar": "نحن مجموعة صناعية *سعودية 100%* مقرها الرياض، نخدم الوطن بفخر وتفانٍ.\n\n*إرثنا:*\n• حلول صناعية فولاذية عالية الجودة\n• 7 أقسام متخصصة تحت مظلة واحدة\n• متوافقة مع رؤية 2030 ومصنعة محلياً\n• نخدم قطاعات النفط والبنية التحتية والحكومة والقطاع الخاص\n\n*كيف يمكننا مساعدتكم اليوم؟*",
+      "buttons": [
+        { 
+          "id": "about_profile", 
+          "title_en": "📄 Company Profile & Certifications",
+          "title_ar": "📄 نبذة الشركة والشهادات"
+        },
+        { 
+          "id": "about_video", 
+          "title_en": "🎥 Watch Factory Video Tour",
+          "title_ar": "🎥 مشاهدة جولة المصنع"
+        },
+        { 
+          "id": "about_brochure", 
+          "title_en": "📥 Download General Brochure",
+          "title_ar": "📥 تحميل الكتيب العام"
+        },
+        { 
+          "id": "about_question", 
+          "title_en": "❓ General Inquiry",
+          "title_ar": "❓ استفسار عام"
+        }
+      ],
+      "next_logic": {
+        "about_profile": "send_profile",
+        "about_video": "send_video",
+        "about_brochure": "send_brochure",
+        "about_question": "general_inquiry_form"
+      }
+    },
+
+    "fencing_submenu": {
+      "type": "interactive_list",
+      "header_en": "🛡️ Fencing Solutions",
+      "header_ar": "🛡️ حلول التسييج",
+      "body_en": "Thank you for your interest in our *HCIS & Aramco-compliant* fencing solutions.\n\n*Our Expertise:*\n• Perimeter security for critical infrastructure\n• Residential & commercial compounds\n• Industrial facilities & construction sites\n• Automated gate systems\n\n*Please select your specific requirement:*",
+      "body_ar": "شكراً لاهتمامكم بحلول التسييج *المتوافقة مع أرامكو وهيس*.\n\n*خبراتنا:*\n• أمن المحيط للبنية التحتية الحيوية\n• مجمعات سكنية وتجارية\n• منشآت صناعية ومواقع بناء\n• أنظمة بوابات أوتوماتيكية\n\n*يرجى اختيار متطلباتكم المحددة:*",
+      "button_text_en": "Select Fence Type",
+      "button_text_ar": "اختيار نوع السياج",
+      "sections": [
+        {
+          "title_en": "Permanent Fencing",
+          "title_ar": "التسييج الدائم",
+          "rows": [
+            { 
+              "id": "fence_chainlink", 
+              "title_en": "Chain Link Fence Systems", 
+              "title_ar": "أنظمة السياج الشبكي",
+              "description_en": "Industrial, residential, PVC coated options",
+              "description_ar": "صناعي، سكني، خيارات مطلية PVC"
+            },
+            { 
+              "id": "fence_welded", 
+              "title_en": "Welded Mesh Fence Panels", 
+              "title_ar": "ألواح السياج الملحوم",
+              "description_en": "High-strength for factories & compounds",
+              "description_ar": "قوة عالية للمصانع والمجمعات"
+            },
+            { 
+              "id": "fence_security", 
+              "title_en": "Security Mesh (Anti-Climb)", 
+              "title_ar": "الشبك الأمني (مضاد للتسلق)",
+              "description_en": "Maximum security, 358 mesh, anti-cut",
+              "description_ar": "أمن أقصى، شبك 358، مضاد للقطع"
+            }
+          ]
+        },
+        {
+          "title_en": "Gates & Temporary",
+          "title_ar": "البوابات والمؤقت",
+          "rows": [
+            { 
+              "id": "fence_swing", 
+              "title_en": "Swing Gates", 
+              "title_ar": "البوابات الدوارة",
+              "description_en": "Manual & automated options",
+              "description_ar": "خيارات يدوية وأوتوماتيكية"
+            },
+            { 
+              "id": "fence_sliding", 
+              "title_en": "Sliding Gates", 
+              "title_ar": "البوابات المنزلقة",
+              "description_en": "Electric automation ready",
+              "description_ar": "جاهزة للتشغيل الكهربائي"
+            },
+            { 
+              "id": "fence_heras", 
+              "title_en": "Heras Temporary Fencing", 
+              "title_ar": "سياج هيراس المؤقت",
+              "description_en": "Construction sites & events",
+              "description_ar": "مواقع البناء والفعاليات"
+            }
+          ]
+        }
+      ],
+      "next": "fencing_deep_dive"
+    },
+
+    "fencing_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "Excellent choice. To provide you with the most accurate technical solution and quotation, we would be grateful if you could share a few details:\n\n*Typical Questions We Ask:*\n• Project location (city/region)?\n• Perimeter length or area size?\n• Security level required (standard/high/maximum)?\n• Ground conditions (flat/rocky/sandy)?\n• Need for automation/integration?\n\n*How would you like to proceed?*",
+      "body_ar": "اختيار ممتاز. لتقديم الحل التقني وعرض السعر الأكثر دقة، سنكون ممتنين لو شاركتم بعض التفاصيل:\n\n*الأسئلة النموذجية:*\n• موقع المشروع (المدينة/المنطقة)؟\n• طول المحيط أو مساحة المنطقة؟\n• مستوى الأمن المطلوب (عادي/عالي/أقصى)؟\n• حالة الأرض (مسطحة/صخرية/رملية)؟\n• هل تحتاجون أتمتة/تكامل؟\n\n*كيف ترغبون في المتابعة؟*",
+      "buttons": [
+        { 
+          "id": "fence_quote", 
+          "title_en": "📋 Request Detailed Quotation",
+          "title_ar": "📋 طلب عرض سعر مفصل"
+        },
+        { 
+          "id": "fence_specs", 
+          "title_en": "📊 View Technical Specifications",
+          "title_ar": "📊 عرض المواصفات الفنية"
+        },
+        { 
+          "id": "fence_gallery", 
+          "title_en": "📸 See Project Gallery",
+          "title_ar": "📸 معرض المشاريع"
+        },
+        { 
+          "id": "fence_engineer", 
+          "title_en": "👨‍🔧 Consult Engineer",
+          "title_ar": "👨‍🔧 استشارة مهندس"
+        }
+      ],
+      "next_logic": {
+        "fence_quote": "fencing_quotation_form",
+        "fence_specs": "fencing_specifications",
+        "fence_gallery": "fencing_gallery",
+        "fence_engineer": "speak_engineer"
+      }
+    },
+
+    "fencing_quotation_form": {
+      "type": "text",
+      "body_en": "We are honored to prepare a customized quotation for your fencing project.\n\n*Please provide the following details:*\n\n1️⃣ *Project Location:* City/Region\n2️⃣ *Site Type:* Industrial/Residential/Commercial/Aramco facility\n3️⃣ *Perimeter Length:* Approximate linear meters\n4️⃣ *Height Required:* 1.5m / 2.0m / 2.4m / 3.0m / Other\n5️⃣ *Security Level:* Standard / High Security / Maximum Security (anti-climb)\n6️⃣ *Ground Condition:* Flat / Sloped / Rocky / Sand\n7️⃣ *Gate Requirements:* Number and type (swing/sliding/automated)\n8️⃣ *Timeline:* When do you need installation completed?\n9️⃣ *Budget Range:* Optional, helps us recommend best options\n\n*You may also upload:*\n• Site drawings or maps\n• Photos of the area\n• BOQ (Bill of Quantities)\n\nOur engineering team will respond within *2-4 working hours* with a comprehensive proposal, In sha Allah.",
+      "body_ar": "نتشرف بإعداد عرض سعر مخصص لمشروع التسييج الخاص بكم.\n\n*يرجى تزويدنا بالتفاصيل التالية:*\n\n1️⃣ *موقع المشروع:* المدينة/المنطقة\n2️⃣ *نوع الموقع:* صناعي/سكني/تجاري/منشأة أرامكو\n3️⃣ *طول المحيط:* تقريباً بالأمتار الخطية\n4️⃣ *الارتفاع المطلوب:* 1.5م / 2.0م / 2.4م / 3.0م / أخرى\n5️⃣ *مستوى الأمن:* عادي / أمن عالي / أمن أقصى (مضاد للتسلق)\n6️⃣ *حالة الأرض:* مسطحة / مائلة / صخرية / رملية\n7️⃣ *متطلبات البوابات:* العدد والنوع (دوارة/منزلقة/أوتوماتيكية)\n8️⃣ *الجدول الزمني:* متى تحتاجون الانتهاء من التركيب؟\n9️⃣ *نطاق الميزانية:* اختياري، يساعدنا في التوصية بالخيارات الأفضل\n\n*يمكنكم أيضاً رفع:*\n• رسومات أو خرائط الموقع\n• صور للمنطقة\n• جدول الكميات (BOQ)\n\nسيقوم فريقنا الهندسي بالرد خلال *2-4 ساعات عمل* بعرض شامل، إن شاء الله."
+    },
+
+    "gabion_submenu": {
+      "type": "interactive_list",
+      "header_en": "🪨 Gabion & Erosion Control",
+      "header_ar": "🪨 الجبions والتحكم بالتآكل",
+      "body_en": "Thank you for considering our *ASTM-certified* gabion solutions.\n\n*Applications We Specialize In:*\n• Retaining walls & slope stabilization\n• Riverbank & coastal protection\n• Landscaping & architectural features\n• Military/defense barriers\n• Flood control systems\n\n*Please select your application:*",
+      "body_ar": "شكراً لاهتمامكم بحلول الجبions *المعتمدة ASTM*.\n\n*التطبيقات المتخصصة فيها:*\n• جدران الاستناد وتثبيت المنحدرات\n• حماية ضفاف الأنهار والسواحل\n• المناظر الطبيعية والعناصر المعمارية\n• الحواجز العسكرية/الدفاعية\n• أنظمة السيطرة على الفيضانات\n\n*يرجى اختيار تطبيقكم:*",
+      "button_text_en": "Select Application",
+      "button_text_ar": "اختيار التطبيق",
+      "rows": [
+        { 
+          "id": "gabion_retaining", 
+          "title_en": "Retaining Walls", 
+          "title_ar": "جدران الاستناد",
+          "description_en": "Structural walls for soil retention",
+          "description_ar": "جدران إنشائية للاحتفاظ بالتربة"
+        },
+        { 
+          "id": "gabion_erosion", 
+          "title_en": "River/Coastal Protection", 
+          "title_ar": "حماية الأنهار/السواحل",
+          "description_en": "Erosion control, scour protection",
+          "description_ar": "التحكم بالتآكل، حماية من النحر"
+        },
+        { 
+          "id": "gabion_landscape", 
+          "title_en": "Landscaping & Architecture", 
+          "title_ar": "المناظر الطبيعية والعمارة",
+          "description_en": "Planters, decorative walls, gardens",
+          "description_ar": "أحواض زراعة، جدران زخرفية، حدائق"
+        },
+        { 
+          "id": "gabion_military", 
+          "title_en": "Military/Defense Barriers", 
+          "title_ar": "حواجز عسكرية/دفاعية",
+          "description_en": "Blast protection, security barriers",
+          "description_ar": "حماية من الانفجارات، حواجز أمنية"
+        },
+        { 
+          "id": "gabion_flood", 
+          "title_en": "Flood Control", 
+          "title_ar": "السيطرة على الفيضانات",
+          "description_en": "Emergency flood barriers, dams",
+          "description_ar": "حواجز طوارئ الفيضانات، سدود"
+        },
+        { 
+          "id": "gabion_accessory", 
+          "title_en": "Accessories & Geotextile", 
+          "title_ar": "الملحقات والأغشية الجيوتقنية",
+          "description_en": "Wire mesh, connection rings, fabrics",
+          "description_ar": "شبك سلكي، حلقات توصيل، أقمشة"
+        }
+      ],
+      "next": "gabion_deep_dive"
+    },
+
+    "gabion_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "We appreciate your interest in our gabion systems. To engineer the optimal solution for your project, we kindly request:\n\n*Technical Details Needed:*\n• Wall height and length?\n• Soil type (clay/sand/rock)?\n• Water exposure (seasonal/permanent/none)?\n• Load requirements (traffic/structural)?\n• Aesthetic requirements (natural stone/facing)?\n\n*Our engineers will analyze your requirements and recommend the appropriate:*\n• Gabion type (woven/welded)\n• Mesh specifications\n• Filling material\n• Installation methodology",
+      "body_ar": "نقدر اهتمامكم بأنظمة الجبions. لتصميم الحل الأمثل لمشروعكم، نرجو:\n\n*التفاصيل الفنية المطلوبة:*\n• ارتفاع وطول الجدار؟\n• نوع التربة (طينية/رملية/صخرية)؟\n• التعرض للمياه (موسمي/دائم/لا يوجد)؟\n• متطلبات الأحمال (حركة مرور/إنشائية)؟\n• المتطلبات الجمالية (حجر طبيعي/واجهة)؟\n\n*سيحلل مهندسونا متطلباتكم ويوصون بالمناسب:*\n• نوع الجبion (منسوج/ملحوم)\n• مواصفات الشبك\n• مواد الحشو\n• منهجية التركيب",
+      "buttons": [
+        { 
+          "id": "gabion_quote", 
+          "title_en": "Request Technical Quote",
+          "title_ar": "طلب عرض سعر تقني"
+        },
+        { 
+          "id": "gabion_calc", 
+          "title_en": "Volume Calculator Help",
+          "title_ar": "مساعدة حاسبة الحجم"
+        },
+        { 
+          "id": "gabion_cad", 
+          "title_en": "CAD/Drawing Support",
+          "title_ar": "دعم الرسومات/CAD"
+        }
+      ],
+      "next_logic": {
+        "gabion_quote": "gabion_quotation_form",
+        "gabion_calc": "gabion_calculator",
+        "gabion_cad": "speak_engineer"
+      }
+    },
+
+    "gabion_quotation_form": {
+      "type": "text",
+      "body_en": "We are pleased to prepare a comprehensive gabion solution proposal.\n\n*Project Information Required:*\n\n📍 *Site Location:*\n🏗️ *Project Type:* Infrastructure / Commercial / Residential / Military / Landscaping\n📏 *Dimensions:*\n   - Wall height (meters)\n   - Wall length (meters)\n   - Base width if known\n🌍 *Site Conditions:*\n   - Soil bearing capacity (if known)\n   - Ground water level\n   - Slope angle (if applicable)\n💧 *Hydraulic Conditions:*\n   - River flow rate (for river works)\n   - Wave height (for coastal)\n   - Rainfall intensity (for drainage)\n🎨 *Aesthetic Requirements:*\n   - Stone type preference\n   - Need for architectural facing?\n📋 *Documentation Available:*\n   - Topographical survey\n   - Geotechnical report\n   - Architectural drawings\n\n*Our response will include:*\n• Detailed BOQ\n• Installation methodology\n• Project timeline\n• Warranty terms",
+      "body_ar": "يسعدنا إعداد اقتراح شامل لحل الجبions.\n\n*المعلومات المطلوبة للمشروع:*\n\n📍 *موقع الموقع:*\n🏗️ *نوع المشروع:* بنية تحتية / تجاري / سكني / عسكري / مناظر طبيعية\n📏 *الأبعاد:*\n   - ارتفاع الجدار (أمتار)\n   - طول الجدار (أمتار)\n   - عرض القاعدة إن وُجد\n🌍 *ظروف الموقع:*\n   - قدرة تحمل التربة (إن وُفقت)\n   - منسوب المياه الجوفية\n   - زاوية الميل (إن وجدت)\n💧 *الظروف الهيدروليكية:*\n   - معدل تدفق النهر (لأعمال الأنهار)\n   - ارتفاع الأمواج (للشواطئ)\n   - شدة الأمطار (للصرف)\n🎨 *المتطلبات الجمالية:*\n   - تفضيل نوع الحجر\n   - هل تحتاجون واجهة معمارية؟\n📋 *المستندات المتوفرة:*\n   - مساحة طبوغرافية\n   - تقرير جيوتقني\n   - رسومات معمارية\n\n*سيشمل ردنا:*\n• جدول كميات مفصل\n• منهجية التركيب\n• الجدول الزمني للمشروع\n• شروط الضمان"
+    },
+
+    "upvc_submenu": {
+      "type": "interactive_list",
+      "header_en": "🚪 UPVC Doors & Windows (Maskni)",
+      "header_ar": "🚪 أبواب ونوافذ UPVC (Maskni)",
+      "body_en": "Welcome to *Maskni* — our premium UPVC brand designed for the Saudi climate.\n\n*Key Benefits:*\n• Thermal insulation (reduce AC costs by up to 30%)\n• Sound insulation (up to 40dB reduction)\n• Dust & sand storm resistant\n• No painting or maintenance required\n• 10+ years warranty\n\n*What would you like to explore?*",
+      "body_ar": "أهلاً بكم في *Maskni* — علامتنا التجارية الممتازة للـ UPVC المصممة للمناخ السعودي.\n\n*الفوائد الرئيسية:*\n• عزل حراري (توفير حتى 30% من تكاليف التكييف)\n• عزل صوتي (تخفيض حتى 40 ديسيبل)\n• مقاوم للغبار والعواصف الرملية\n• لا يحتاج طلاء أو صيانة\n• ضمان أكثر من 10 سنوات\n\n*ماذا تودون استكشافه؟*",
+      "button_text_en": "Select Product",
+      "button_text_ar": "اختيار المنتج",
+      "rows": [
+        { 
+          "id": "upvc_window", 
+          "title_en": "UPVC Windows", 
+          "title_ar": "نوافذ UPVC",
+          "description_en": "Sliding, casement, fixed, arch designs",
+          "description_ar": "منزلقة، شباك، ثابتة، تصاميم قوسية"
+        },
+        { 
+          "id": "upvc_door", 
+          "title_en": "UPVC Doors", 
+          "title_ar": "أبواب UPVC",
+          "description_en": "French doors, sliding, main entrance",
+          "description_ar": "أبواب فرنسية، منزلقة، مدخل رئيسي"
+        },
+        { 
+          "id": "upvc_wpc", 
+          "title_en": "WPC Doors", 
+          "title_ar": "أبواب WPC",
+          "description_en": "Wood-plastic composite, waterproof",
+          "description_ar": "خشب بلاستيك مركب، مقاوم للماء"
+        },
+        { 
+          "id": "upvc_facade", 
+          "title_en": "Full Façade Solutions", 
+          "title_ar": "حلول الواجهات الكاملة",
+          "description_en": "Curtain walls, structural glazing",
+          "description_ar": "جدران ستائرية، تزجيج إنشائي"
+        }
+      ],
+      "next": "upvc_deep_dive"
+    },
+
+    "upvc_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "Excellent choice for energy efficiency. To recommend the perfect Maskni solution, please help us understand:\n\n*Project Assessment Questions:*\n• Building type (villa/apartment/commercial)?\n• Number of openings needed?\n• Preferred opening style (sliding/casement/fixed)?\n• Color preference (white/wood grain/custom)?\n• Glass requirement (single/double/tempered/Low-E)?\n• Security level (standard/reinforced/multi-point lock)?\n\n*We offer free site measurement and consultation in:*\nRiyadh, Jeddah, Dammam, and surrounding areas.",
+      "body_ar": "اختيار ممتاز لكفاءة الطاقة. لنوصي بحل Maskni المثالي، ساعدونا في فهم:\n\n*أسئلة تقييم المشروع:*\n• نوع المبنى (فيلا/شقة/تجاري)؟\n• عدد الفتحات المطلوبة؟\n• نمط الفتح المفضل (منزلق/شباك/ثابت)؟\n• تفضيل اللون (أبيض/حبوب خشب/مخصص)؟\n• متطلبات الزجاج (مفرد/مزدوج/مقسى/منخفض الانبعاث)؟\n• مستوى الأمن (عادي/معزز/قفل متعدد النقاط)؟\n\n*نقدم قياس واستشارة مجانية في الموقع في:*\nالرياض، جدة، الدمام، والمناطق المحيطة.",
+      "buttons": [
+        { 
+          "id": "upvc_quote", 
+          "title_en": "Request Free Quotation",
+          "title_ar": "طلب عرض سعر مجاني"
+        },
+        { 
+          "id": "upvc_visit", 
+          "title_en": "Schedule Site Visit",
+          "title_ar": "جدولة زيارة موقع"
+        },
+        { 
+          "id": "upvc_catalog", 
+          "title_en": "Download Product Catalog",
+          "title_ar": "تحميل كتالوج المنتجات"
+        }
+      ],
+      "next_logic": {
+        "upvc_quote": "upvc_quotation_form",
+        "upvc_visit": "schedule_visit_form",
+        "upvc_catalog": "send_upvc_catalog"
+      }
+    },
+
+    "upvc_quotation_form": {
+      "type": "text",
+      "body_en": "We are delighted to prepare your Maskni UPVC quotation.\n\n*Please share the following details:*\n\n🏠 *Project Information:*\n• Property type: Villa / Apartment / Commercial building / Hospital / School\n• Location: City / District\n• Current construction phase: Planning / Under construction / Renovation\n\n🪟 *Window/Door Requirements:*\n• Number of windows and approximate sizes (width x height in cm)\n• Number of doors and types (main/balcony/bathroom)\n• Preferred profile series (60mm/70mm/80mm — we can advise)\n• Opening mechanism: Sliding / Casement / Tilt & Turn / Fixed\n\n🎨 *Finishing Preferences:*\n• Color: White / Beige / Wood grain (Golden oak/Walnut/Mahogany)\n• Glass type: Clear / Frosted / Tempered / Double glazed / Low-E\n• Hardware: Standard / Premium (German brand)\n• Screens: Mosquito nets required?\n\n📅 *Timeline:* When do you need installation?\n💰 *Budget indication:* Economy / Standard / Premium range\n\n*Optional:* Upload architectural drawings or photos for accurate assessment.",
+      "body_ar": "يسعدنا إعداد عرض سعر Maskni UPVC الخاص بكم.\n\n*يرجى مشاركة التفاصيل التالية:*\n\n🏠 *معلومات المشروع:*\n• نوع العقار: فيلا / شقة / مبنى تجاري / مستشفى / مدرسة\n• الموقع: المدينة / الحي\n• مرحلة البناء الحالية: تخطيط / تحت الإنشاء / تجديد\n\n🪟 *متطلبات النوافذ/الأبواب:*\n• عدد النوافذ والأحجام التقريبية (العرض × الارتفاع بالسم)\n• عدد الأبواب وأنواعها (رئيسية/بلكونة/حمام)\n• سلسلة البروفيل المفضلة (60مم/70مم/80مم — يمكننا النصح)\n• آلية الفتح: منزلقة / شباك / ميل ودوران / ثابتة\n\n🎨 *تفضيلات التشطيب:*\n• اللون: أبيض / بيج / حبوب خشب (بلوط ذهبي/جوز/ماهوجني)\n• نوع الزجاج: شفاف / متجمد / مقسى / مزدوج / منخفض الانبعاث\n• الأجهزة: عادي / ممتاز (علامة ألمانية)\n• الشبكات: هل تحتاجون شبكات ناموس؟\n\n📅 *الجدول الزمني:* متى تحتاجون التركيب؟\n💰 *مؤشر الميزانية:* اقتصادي / قياسي / ممتاز\n\n*اختياري:* ارفعوا الرسومات المعمارية أو الصور للتقييم الدقيق."
+    },
+
+    "barrier_submenu": {
+      "type": "interactive_list",
+      "header_en": "🚧 Security Barriers & Access Control",
+      "header_ar": "🚧 حواجز الأمن ونقاط التحكم",
+      "body_en": "Thank you for trusting us with your access control requirements.\n\n*Our Solutions Include:*\n• Automatic boom barriers (parking/roads)\n• Smart solar-powered gates (Parklio)\n• Pedestrian control barriers\n• High-security crash-rated barriers\n• Advertising barriers for commercial spaces\n\n*Please select your application:*",
+      "body_ar": "شكراً لثقتكم بنا في متطلبات التحكم بالدخول.\n\n*حلولنا تشمل:*\n• حواجز بوابات أوتوماتيكية (مواقف/طرق)\n• بوابات ذكية تعمل بالطاقة الشمسية (Parklio)\n• حواجز التحكم بالمشاة\n• حواجز عالية الأمن مقاومة للاصطدام\n• حواجز إعلانية للمساحات التجارية\n\n*يرجى اختيار تطبيقكم:*",
+      "button_text_en": "Select Barrier Type",
+      "button_text_ar": "اختيار نوع الحاجز",
+      "rows": [
+        { 
+          "id": "barrier_boom", 
+          "title_en": "Automatic Boom Barriers", 
+          "title_ar": "حواجز البوابات الأوتوماتيكية",
+          "description_en": "Parking lots, toll gates, residential",
+          "description_ar": "مواقف السيارات، بوابات الرسوم، سكني"
+        },
+        { 
+          "id": "barrier_parklio", 
+          "title_en": "Smart Solar Gates (Parklio)", 
+          "title_ar": "بوابات ذكية شمسية (Parklio)",
+          "description_en": "Smartphone control, no electricity needed",
+          "description_ar": "تحكم بالهاتف، لا تحتاج كهرباء"
+        },
+        { 
+          "id": "barrier_pedestrian", 
+          "title_en": "Pedestrian Barriers", 
+          "title_ar": "حواجز المشاة",
+          "description_en": "Turnstiles, flap barriers, speed gates",
+          "description_ar": "بوابات دوارة، حواجز أجنحة، بوابات سريعة"
+        },
+        { 
+          "id": "barrier_advertising", 
+          "title_en": "Advertising Barriers", 
+          "title_ar": "الحواجز الإعلانية",
+          "description_en": "Revenue-generating access control",
+          "description_ar": "تحكم بالدخول مولد للإيرادات"
+        },
+        { 
+          "id": "barrier_crash", 
+          "title_en": "High-Security Crash Barriers", 
+          "title_ar": "حواجز عالية الأمن المضادة للاصطدام",
+          "description_en": "K4/K8/K12 rated, anti-terrorism",
+          "description_ar": "تصنيف K4/K8/K12، مضادة للإرهاب"
+        },
+        { 
+          "id": "barrier_faac", 
+          "title_en": "FAAC Heavy-Duty Barriers", 
+          "title_ar": "حواجز FAAC الثقيلة",
+          "description_en": "Industrial, high-traffic applications",
+          "description_ar": "تطبيقات صناعية، حركة مرور عالية"
+        }
+      ],
+      "next": "barrier_deep_dive"
+    },
+
+    "barrier_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "To recommend the optimal barrier solution, we need to understand your traffic and security requirements:\n\n*Critical Questions:*\n• Vehicle type (cars/trucks/buses/heavy equipment)?\n• Traffic frequency (vehicles per hour)?\n• Power availability (solar/electric/hybrid)?\n• Integration needs (RFID/ANPR/intercom)?\n• Crash rating required (for high security)?\n• Opening speed requirements?",
+      "body_ar": "لنوصي بحل الحاجز الأمثل، نحتاج فهم متطلبات الحركة والأمن:\n\n*أسئلة حاسمة:*\n• نوع المركبات (سيارات/شاحنات/حافلات/معدات ثقيلة)؟\n• تردد الحركة (مركبات في الساعة)؟\n• توفر الكهرباء (شمسي/كهربائي/هجين)؟\n• احتياجات التكامل (RFID/ANPR/اتصال داخلي)؟\n• تصنيف الاصطدام المطلوب (للأمن العالي)؟\n• متطلبات سرعة الفتح؟",
+      "buttons": [
+        { 
+          "id": "barrier_quote", 
+          "title_en": "Request Barrier Quote",
+          "title_ar": "طلب عرض سعر للحاجز"
+        },
+        { 
+          "id": "barrier_specs", 
+          "title_en": "View Technical Data",
+          "title_ar": "عرض البيانات الفنية"
+        }
+      ],
+      "next_logic": {
+        "barrier_quote": "barrier_quotation_form",
+        "barrier_specs": "barrier_specifications"
+      }
+    },
+
+    "barrier_quotation_form": {
+      "type": "text",
+      "body_en": "We are ready to engineer your access control solution.\n\n*Site & Traffic Analysis:*\n\n🚗 *Vehicle Profile:*\n• Types: Cars only / Mixed / Heavy trucks / Buses\n• Frequency: ___ vehicles per hour (peak)\n• Direction: One-way / Two-way / Multiple lanes\n\n⚡ *Power & Environment:*\n• Power source available? Yes / No (solar preferred)\n• Outdoor conditions: Normal / Coastal (salt air) / Desert (sand)\n• Temperature range expected\n\n🔐 *Security Level:*\n• Standard (parking management)\n• High (corporate/government)\n• Maximum (critical infrastructure, crash-rated K4/K8/K12)\n\n📡 *Integration Requirements:*\n• Access control: RFID cards / Biometric / ANPR (plate recognition)\n• Visitor management: Intercom / QR codes / Mobile app\n• Central monitoring: CCTV integration / Remote management\n\n📍 *Installation Site:*\n• Address / GPS coordinates\n• Road width / Lane configuration\n• Existing foundation or new installation\n\n⏰ *Timeline:* Urgent / Standard / Future project",
+      "body_ar": "نحن مستعدون لهندسة حل التحكم بالدخول الخاص بكم.\n\n*تحليل الموقع والحركة:*\n\n🚗 *ملف المركبات:*\n• الأنواع: سيارات فقط / مختلطة / شاحنات ثقيلة / حافلات\n• التردد: ___ مركبة في الساعة (ذروة)\n• الاتجاه: اتجاه واحد / اتجاهان / مسارات متعددة\n\n⚡ *الطاقة والبيئة:*\n• هل مصدر الطاقة متوفر؟ نعم / لا (الطاقة الشمسية مفضلة)\n• ظروف خارجية: عادية / ساحلية (هواء مالح) / صحراوية (رمال)\n• نطاق درجات الحرارة المتوقع\n\n🔐 *مستوى الأمن:*\n• قياسي (إدارة مواقف)\n• عالي (شركات/حكومة)\n• أقصى (بنية تحتية حيوية، تصنيف اصطدام K4/K8/K12)\n\n📡 *متطلبات التكامل:*\n• التحكم بالدخول: بطاقات RFID / بيومتري / ANPR (تعرف اللوحات)\n• إدارة الزوار: اتصال داخلي / رموز QR / تطبيق جوال\n• المراقبة المركزية: تكامل CCTV / إدارة عن بعد\n\n📍 *موقع التركيب:*\n• العنوان / إحداثيات GPS\n• عرض الطريق / تكوين المسار\n• أساس موجود أو تركيب جديد\n\n⏰ *الجدول الزمني:* عاجل / قياسي / مشروع مستقبلي"
+    },
+
+    "galvanizing_submenu": {
+      "type": "interactive_list",
+      "header_en": "⚙️ Spin Galvanizing & Steel Basics",
+      "header_ar": "⚙️ التغليف الدوار وأساسيات الصلب",
+      "body_en": "Welcome to the *first dedicated small-parts spin-galvanizing line in KSA*.\n\n*Our Specialization:*\n• Parts under 3kg only\n• Thread-safe galvanizing\n• 24-48 hour turnaround\n• ASTM A123/A153 compliant\n• ISO 9001 certified\n\n*What type of parts do you need galvanized?*",
+      "body_ar": "أهلاً بكم في *أول خط متخصص للتغليف الدوار للقطع الصغيرة في المملكة*.\n\n*تخصصنا:*\n• قطع أقل من 3 كجم فقط\n• تغليف آمن للخيوط\n• وقت تنفيذ 24-48 ساعة\n• متوافق مع ASTM A123/A153\n• معتمد ISO 9001\n\n*ما نوع القطع التي تحتاجون تغليفها؟*",
+      "button_text_en": "Select Part Category",
+      "button_text_ar": "اختيار فئة القطع",
+      "rows": [
+        { 
+          "id": "galv_fasteners", 
+          "title_en": "Bolts, Nuts & Fasteners", 
+          "title_ar": "المسامير والصواميل والموثقات",
+          "description_en": "All thread sizes, ASTM compliant",
+          "description_ar": "جميع أحجام الخيوط، متوافق ASTM"
+        },
+        { 
+          "id": "galv_clamps", 
+          "title_en": "Clamps, Mounts & Brackets", 
+          "title_ar": "المشابك والحوامل والأقواس",
+          "description_en": "Cable clamps, pipe supports, brackets",
+          "description_ar": "مشابك كابلات، دعامات أنابيب، أقواس"
+        },
+        { 
+          "id": "galv_electrical", 
+          "title_en": "Electrical & Cable Accessories", 
+          "title_ar": "ملحقات الكهرباء والكابلات",
+          "description_en": "Cable trays, glands, earth rods",
+          "description_ar": "حوامل كابلات، غدائر، قضبان تريب"
+        },
+        { 
+          "id": "galv_solar", 
+          "title_en": "Solar Mounting Hardware", 
+          "title_ar": "أجهزة تركيب الطاقة الشمسية",
+          "description_en": "Clamps, rails, brackets for PV systems",
+          "description_ar": "مشابك، قضبان، أقواس لأنظمة PV"
+        },
+        { 
+          "id": "galv_custom", 
+          "title_en": "Custom Small Parts", 
+          "title_ar": "قطع صغيرة مخصصة",
+          "description_en": "Fabricated parts, assemblies under 3kg",
+          "description_ar": "قطع مصنعة، تجميعات أقل من 3 كجم"
+        },
+        { 
+          "id": "galv_bulk", 
+          "title_en": "Bulk Processing Quote", 
+          "title_ar": "عرض سعر للمعالجة بالجملة",
+          "description_en": "High-volume, contract pricing",
+          "description_ar": "حجم عالي، تسعير تعاقدي"
+        }
+      ],
+      "next": "galvanizing_deep_dive"
+    },
+
+    "galvanizing_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "We understand the critical importance of corrosion protection for your steel components.\n\n*Our Process Advantages:*\n• Centrifugal spinning ensures uniform coating\n• Thread protection technology (no re-tapping needed)\n• Fast turnaround for urgent projects\n• Pickling and surface prep included\n• Coating thickness testing reports available\n\n*To provide accurate pricing, please tell us:*\n• Total weight or piece count?\n• Part dimensions (max L×W×H)?\n• Current finish (black steel/painted/pre-galvanized)?\n• Required coating thickness (standard/heavy)?",
+      "body_ar": "نحن نفهم أهمية الحماية من التآكل لعناصر الصلب الخاصة بكم.\n\n*مميزات عمليتنا:*\n• الدوران الطردي يضمن طلاء متجانس\n• تقنية حماية الخيوط (لا حاجة لإعادة التنقيب)\n• تنفيذ سريع للمشاريع العاجلة\n• التنقية والتحضير السطحي مشمولان\n• تقارير اختبار سماكة الطلاء متوفرة\n\n*لتقديم تسعير دقيق، أخبرونا:*\n• الوزن الإجمالي أو عدد القطع؟\n• أبعاد القطع (أقصى ط×ع×ا)؟\n• التشطيب الحالي (فولاذ أسود/مطلي/مغلف مسبقاً)؟\n• سماكة الطلاء المطلوبة (قياسي/ثقيل)؟",
+      "buttons": [
+        { 
+          "id": "galv_upload", 
+          "title_en": "📎 Upload Parts List/Drawings",
+          "title_ar": "📎 رفع قائمة القطع/الرسومات"
+        },
+        { 
+          "id": "galv_quote", 
+          "title_en": "💰 Request Pricing",
+          "title_ar": "💰 طلب التسعير"
+        },
+        { 
+          "id": "galv_process", 
+          "title_en": "🔬 View Process Details",
+          "title_ar": "🔬 عرض تفاصيل العملية"
+        }
+      ],
+      "next_logic": {
+        "galv_upload": "galvanizing_upload_form",
+        "galv_quote": "galvanizing_quotation_form",
+        "galv_process": "galvanizing_process_info"
+      }
+    },
+
+    "galvanizing_quotation_form": {
+      "type": "text",
+      "body_en": "We are pleased to quote for your spin galvanizing requirements.\n\n*Part Details Required:*\n\n📋 *Item Description:*\n• Part name and function\n• Material grade (if known): Mild steel / High tensile / Cast iron\n• Current condition: Black (raw) / Painted / Rusty / Pre-galvanized\n\n📏 *Dimensions & Weight:*\n• Quantity of pieces\n• Maximum dimensions per piece (Length × Width × Height in mm)\n• Weight per piece or total batch weight\n• Are there hollow sections or closed cavities?\n\n🔩 *Thread/Specification Details:*\n• Thread size and pitch (if applicable)\n• Tolerance requirements\n• Critical dimensions that must be maintained\n• Standards required: ASTM A123 / A153 / A767 / Other\n\n📊 *Coating Requirements:*\n• Coating thickness: Standard (50-75μm) / Heavy (75-100μm) / Specification-driven\n• Finish appearance: Bright / Matte / Passivated\n\n🚚 *Logistics:*\n• Pickup required? Yes / No\n• Delivery location\n• Urgency: Standard (48hr) / Express (24hr) / Scheduled batch\n\n*Please upload:*\n• Photos of parts\n• Technical drawings (PDF/DWG)\n• Excel list with quantities",
+      "body_ar": "يسعدنا تقديم عرض سعر لمتطلبات التغليف الدوار الخاصة بكم.\n\n*تفاصيل القطع المطلوبة:*\n\n📋 *وصف القطعة:*\n• اسم القطعة ووظيفتها\n• درجة المادة (إن وُفقت): فولاذ معتدل / عالي الشد / حديد زهر\n• الحالة الحالية: أسود (خام) / مطلي / صدأ / مغلف مسبقاً\n\n📏 *الأبعاد والوزن:*\n• كمية القطع\n• الأبعاد القصوى لكل قطعة (الطول × العرض × الارتفاع بالمم)\n• وزن القطعة الواحدة أو وزن الدفعة الإجمالي\n• هل توجد أقسام مجوفة أو تجاويف مغلقة؟\n\n🔩 *تفاصيل الخيوط/المواصفات:*\n• حجم الخيط ودرجته (إن وجد)\n• متطلبات التسامح\n• الأبعاد الحرجة التي يجب الحفاظ عليها\n• المعايير المطلوبة: ASTM A123 / A153 / A767 / أخرى\n\n📊 *متطلبات الطلاء:*\n• سماكة الطلاء: قياسي (50-75 ميكرون) / ثقيل (75-100 ميكرون) / حسب المواصفة\n• مظهر التشطيب: لامع / مطفي / معالج\n\n🚚 *اللوجستيات:*\n• هل يحتاج لاستلام؟ نعم / لا\n• موقع التسليم\n• العجلة: قياسي (48 ساعة) / سريع (24 ساعة) / دفعة مجدولة\n\n*يرجى رفع:*\n• صور للقطع\n• رسومات فنية (PDF/DWG)\n• قائمة Excel بالكميات"
+    },
+
+    "racks_submenu": {
+      "type": "interactive_list",
+      "header_en": "📦 Racks, Shelving & Partitions",
+      "header_ar": "📦 الرفوف والأرفف والفواصل",
+      "body_en": "Thank you for your interest in our *Made in KSA* storage and space division solutions.\n\n*Our Manufacturing Capabilities:*\n• Heavy-duty pallet racking (selective/drive-in/push-back)\n• Medium-duty shelving for warehouses\n• Office partitions and cubicles\n• Retail display systems\n• Custom fabrication\n\n*What storage challenge can we solve for you?*",
+      "body_ar": "شكراً لاهتمامكم بحلول التخزين والتقسيم *المصنعة في المملكة*.\n\n*قدراتنا التصنيعية:*\n• رفوف pallets الثقيلة (انتقائية/دخول مباشر/دفع خلفي)\n• أرفف متوسطة التحمل للمستودعات\n• فواصل مكاتب وكبائن\n• أنظمة عرض تجزئة\n• تصنيع مخصص\n\n*ما التحدي التخزيني الذي يمكننا حله لكم؟*",
+      "button_text_en": "Select Storage Solution",
+      "button_text_ar": "اختيار حل التخزين",
+      "rows": [
+        { 
+          "id": "rack_pallet", 
+          "title_en": "Heavy-Duty Pallet Racking", 
+          "title_ar": "رفوف pallets الثقيلة",
+          "description_en": "Warehouse storage, 1-3 tons per level",
+          "description_ar": "تخزين مستودعات، 1-3 أطنان للمستوى"
+        },
+        { 
+          "id": "rack_shelving", 
+          "title_en": "Industrial Shelving", 
+          "title_ar": "الأرفف الصناعية",
+          "description_en": "Hand-loaded storage, bins, boxes",
+          "description_ar": "تخزين يدوي، صناديق، علب"
+        },
+        { 
+          "id": "rack_office", 
+          "title_en": "Office Partitions", 
+          "title_ar": "فواصل المكاتب",
+          "description_en": "Cubicles, meeting rooms, dividers",
+          "description_ar": "كبائن، غرف اجتماعات، فواصل"
+        },
+        { 
+          "id": "rack_retail", 
+          "title_en": "Retail & Display Systems", 
+          "title_ar": "أنظمة التجزئة والعرض",
+          "description_en": "Showrooms, shops, supermarkets",
+          "description_ar": "صالات عرض، محلات، سوبرماركت"
+        },
+        { 
+          "id": "rack_mezzanine", 
+          "title_en": "Mezzanine Floors", 
+          "title_ar": "الأرضيات المتوسطة",
+          "description_en": "Maximize vertical space utilization",
+          "description_ar": "تعظيم استخدام المساحة العمودية"
+        }
+      ],
+      "next": "racks_deep_dive"
+    },
+
+    "racks_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "We design storage systems that maximize your space efficiency and safety.\n\n*Engineering Considerations:*\n• Load capacity per level?\n• Product dimensions (L×W×H) and weight?\n• Forklift access requirements?\n• Floor load capacity of building?\n• Fire safety regulations (sprinkler clearance)?\n• Future expansion plans?\n\n*Our services include:*\n• Free site survey and 3D layout\n• Structural calculations\n• Installation by certified teams\n• After-sales maintenance contracts",
+      "body_ar": "نصمم أنظمة تخزين تعظم كفاءة المساحة والسلامة.\n\n*اعتبارات هندسية:*\n• قدرة التحميل للمستوى الواحد؟\n• أبعاد المنتج (ط×ع×ا) والوزن؟\n• متطلبات وصول الرافعة الشوكية؟\n• قدرة تحمل أرضية المبنى؟\n• لوائح السلامة من الحرائق (تباعد الرشاشات)؟\n• خطط التوسع المستقبلية؟\n\n*خدماتنا تشمل:*\n• مسح مجاني للموقع وتخطيط 3D\n• حسابات إنشائية\n• تركيب فرق معتمدة\n• عقود صيانة ما بعد البيع",
+      "buttons": [
+        { 
+          "id": "racks_survey", 
+          "title_en": "Request Site Survey",
+          "title_ar": "طلب مسح الموقع"
+        },
+        { 
+          "id": "racks_quote", 
+          "title_en": "Request Quotation",
+          "title_ar": "طلب عرض سعر"
+        }
+      ],
+      "next_logic": {
+        "racks_survey": "schedule_visit_form",
+        "racks_quote": "racks_quotation_form"
+      }
+    },
+
+    "racks_quotation_form": {
+      "type": "text",
+      "body_en": "We are excited to design your storage solution.\n\n*Warehouse/Space Information:*\n\n📐 *Facility Details:*\n• Building dimensions (Length × Width × Clear height)\n• Column grid spacing (if known)\n• Floor type: Concrete slab / Raised floor / Other\n• Floor load capacity (if known): ___ kg/m²\n\n📦 *Storage Requirements:*\n• Product type being stored\n• Unit load dimensions (L×W×H) and weight\n• Current inventory quantity and growth projection\n• Storage method: Pallets (size?) / Boxes / Loose items\n• Access frequency: High rotation / Medium / Archive\n\n🔧 *Operational Details:*\n• Material handling equipment: Forklift (type/capacity) / Hand truck / Automated\n• Aisle width preference\n• Operating hours and shift patterns\n• Special requirements: Cold storage / Clean room / Hazardous materials\n\n⚠️ *Safety & Compliance:*\n• Seismic zone requirements\n• Fire suppression system type\n• Safety accessories needed: Guard rails, column guards, safety mesh\n\n📅 *Project Timeline:*\n• Target completion date\n• Installation constraints (operational hours, access restrictions)",
+      "body_ar": "نحن متحمسون لتصميم حل التخزين الخاص بكم.\n\n*معلومات المستودع/المساحة:*\n\n📐 *تفاصيل المنشأة:*\n• أبعاد المبنى (الطول × العرض × الارتفاع الصافي)\n• تباعد شبكة الأعمدة (إن وُفق)\n• نوع الأرضية: بلاطة خرسانية / أرضية مرتفعة / أخرى\n• قدرة تحمل الأرضية (إن وُفقت): ___ كجم/م²\n\n📦 *متطلبات التخزين:*\n• نوع المنتج المخزن\n• أبعاد الحمولة الواحدة (ط×ع×ا) والوزن\n• كمية المخزون الحالية وتوقعات النمو\n• طريقة التخزين: pallets (الحجم؟) / صناديق / عناصر فضفاضة\n• تردد الوصول: دورة عالية / متوسطة / أرشيف\n\n🔧 *التفاصيل التشغيلية:*\n• معدات مناولة المواد: رافعة شوكية (النوع/القدرة) / عربة يدوية / أوتوماتيكية\n• تفضيل عرض الممر\n• ساعات التشغيل وأنماط الورديات\n• متطلبات خاصة: تخزين بارد / غرفة نظيفة / مواد خطرة\n\n⚠️ *السلامة والامتثال:*\n• متطلبات المنطقة الزلزالية\n• نوع نظام إخماد الحرائق\n• ملحقات أمان مطلوبة: درابزينات، حمايات أعمدة، شبكات أمان\n\n📅 *الجدول الزمني للمشروع:*\n• تاريخ الاستهداف للإنجاز\n• قيود التركيب (ساعات التشغيل، قيود الوصول)"
+    },
+
+    "smart_submenu": {
+      "type": "interactive_list",
+      "header_en": "🚻 Smart Automatic Toilets",
+      "header_ar": "🚻 المراحيض الذكية الأوتوماتيكية",
+      "body_en": "We bring *Italian-designed* smart sanitation solutions to the Kingdom.\n\n*Technology Features:*\n• Automatic self-cleaning after every use\n• Remote monitoring via IoT\n• Water-saving (up to 70% reduction)\n• Antibacterial surfaces\n• Designed for high-traffic public areas\n\n*Select your application:*",
+      "body_ar": "نقدم حلول الصرف الصحي الذكية *بتصميم إيطالي* للمملكة.\n\n*الميزات التقنية:*\n• تنظيف ذاتي أوتوماتيكي بعد كل استخدام\n• مراقبة عن بعد عبر IoT\n• توفير المياه (تخفيض حتى 70%)\n• أسطح مضادة للبكتيريا\n• مصممة لمناطق عامة مزدحمة\n\n*اختيار تطبيقكم:*",
+      "button_text_en": "Select Smart Solution",
+      "button_text_ar": "اختيار الحل الذكي",
+      "rows": [
+        { 
+          "id": "smart_public", 
+          "title_en": "SMART® Public Toilets", 
+          "title_ar": "مراحيض SMART® العامة",
+          "description_en": "High-traffic, fully automated",
+          "description_ar": "حركة مرور عالية، أوتوماتيكية بالكامل"
+        },
+        { 
+          "id": "smart_plus", 
+          "title_en": "PLUS® Premium Models", 
+          "title_ar": "نماذج PLUS® الممتازة",
+          "description_en": "Enhanced features, luxury finish",
+          "description_ar": "ميزات معززة، تشطيب فاخر"
+        },
+        { 
+          "id": "smart_basic", 
+          "title_en": "Basic Automatic Models", 
+          "title_ar": "النماذج الأوتوماتيكية الأساسية",
+          "description_en": "Cost-effective automation",
+          "description_ar": "أتمتة فعالة من حيث التكلفة"
+        },
+        { 
+          "id": "smart_safety", 
+          "title_en": "Safety Rails & Accessories", 
+          "title_ar": "قضبان الأمان والملحقات",
+          "description_en": "Bathroom safety, accessibility",
+          "description_ar": "أمان الحمام، إمكانية الوصول"
+        },
+        { 
+          "id": "smart_iot", 
+          "title_en": "IoT Monitoring Platform", 
+          "title_ar": "منصة مراقبة IoT",
+          "description_en": "Remote management dashboard",
+          "description_ar": "لوحة إدارة عن بعد"
+        }
+      ],
+      "next": "smart_deep_dive"
+    },
+
+    "smart_deep_dive": {
+      "type": "interactive_button",
+      "body_en": "Transforming public sanitation through innovation.\n\n*Project Assessment:*\n• Location type: Highway rest stop / Park / Mall / Airport / Mosque / Beach?\n• Expected daily user volume?\n• Power and water connection availability?\n• Maintenance capability: In-house / Contracted?\n• Integration with smart city infrastructure?\n\n*Our comprehensive service includes:*\n• Site feasibility study\n• Civil works guidance\n• Installation & commissioning\n• Staff training\n• Maintenance contracts with 24/7 support",
+      "body_ar": "تحويل الصرف الصحي العام من خلال الابتكار.\n\n*تقييم المشروع:*\n• نوع الموقع: استراحة طريق/حديقة/مول/مطار/مسجد/شاطئ؟\n• حجم المستخدمين المتوقع يومياً؟\n• توفر توصيلات الكهرباء والمياه؟\n• قدرة الصيانة: داخلية / متعاقد؟\n• التكامل مع بنية المدينة الذكية؟\n\n*خدماتنا الشاملة تشمل:*\n• دراسة جدوى الموقع\n• إرشادات الأعمال المدنية\n• التركيب والتشغيل\n• تد

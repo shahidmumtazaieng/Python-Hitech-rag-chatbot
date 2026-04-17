@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi-Tech WhatsApp Flow Simulator</title>
+  <link rel="stylesheet" href="preview.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">WhatsApp flow simulator</p>
+        <h1>Hi-Tech Industrial Group</h1>
+        <p class="description">Click through the chat flow just like a WhatsApp conversation. All WhatsApp step types are simulated from the flow definition.</p>
+      </div>
+      <button id="restart-button" class="restart-button">Restart Conversation</button>
+    </header>
+
+    <main class="app-content">
+      <section class="chat-panel" id="chat-panel"></section>
+
+      <aside class="control-panel">
+        <div class="panel-card">
+          <div class="panel-title">Current Step</div>
+          <div id="step-title" class="step-info"></div>
+          <div id="step-id" class="step-meta"></div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-title">Available Actions</div>
+          <div id="options-container" class="options-container"></div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-title">Quick Menu</div>
+          <button class="quick-button" data-step="welcome">Go to Welcome</button>
+          <button class="quick-button" data-step="main_menu">Go to Main Menu</button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="app-footer">
+      <p>Interactive simulator built from <strong>chatflow_complete.json</strong>.</p>
+      <p>Buttons and list choices are clickable. Text steps accept input and continue through the flow.</p>
+    </footer>
+  </div>
+
+  <script src="preview.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+
+
+{ "flow_name": "HiTech_Professional_Customer_Support_Flow", "version": "1.0", "company": "Hitech Steel Industries - Saudi Arabia", "tone": "professional_humble_warm", "language_support": ["en", "ar"], "default_language": "en", "steps": { "welcome": { "type": "interac
+
+pasted
+
+
+
+1. Company Overview (for Main Menu & Welcome Message) Hi-Tech Industrial Group / Hitech Steel Industries (Saudi-owned & operated, Riyadh-based) Core Business: Manufacturer & solution provider of steel-based industrial, security, infrastructure, storage, and smart products – “Made in Saudi Arabia”.
+
+pasted
+
+
+you are a seniour customer support , i want yo make a chatfllow for my whatsaap for business, the structure of menu is first come main menu then com ethe message on reletod option and aloing sub menus of each catogory comes , then show meggae relotsd to seletion from sub menu, and then ask the query which cutomer want mean i buikld like tree or peramite stucture, and braches shape, but we make a professional and most rare questions asking from our customer re.loted to my business  catogorsie so make this a single json file for my whatsapp cloude api to serve in real or which file or format need to serve for whatsapp cloude api along , makw a flow in humble tone  but professionaly in very depth
+
+You are out of free messages until 6:00 PM
+Upgrade
+
+Pasted content
+5.82 KB •112 lines
+•
+Formatting may be inconsistent from source
+
+1. Company Overview (for Main Menu & Welcome Message)
+Hi-Tech Industrial Group / Hitech Steel Industries (Saudi-owned & operated, Riyadh-based)
+
+Core Business: Manufacturer & solution provider of steel-based industrial, security, infrastructure, storage, and smart products – “Made in Saudi Arabia”.
+Core Values: Quality, Innovation, Customer Focus, Integrity, Sustainability (aligned with Vision 2030).
+Target Markets: Construction, Infrastructure, Oil & Gas (Aramco/HCIS compliant), Government, Municipalities, Warehousing, Tourism, Smart Cities, Residential & Commercial.
+Key Strength: One parent company with 7 specialized verticals → single WhatsApp entry point for all services.
+
+Recommended Main Menu Structure (WhatsApp Interactive List/Button)
+
+🏠 About Hi-Tech / General Inquiry
+🛡️ Fencing Solutions
+🪨 Gabion & Erosion Control
+🚪 UPVC Doors & Windows
+🚧 Security Barriers & Access Control
+⚙️ Spin Galvanizing & Steel Basics
+📦 Racks & Partitions / Storage Solutions
+🚻 Smart Automatic Toilets & Safety
+📞 Speak to Sales / Request Quote
+❓ Other / Technical Support
+
+(Users click → flow jumps to the relevant vertical with its own sub-menu.)
+2. Categorized Products & Services (Ready for Sub-Menus)
+1. Fencing Solutions – https://www.hitechfence.com/
+Main Category: Perimeter Security & Boundary Fencing (HCIS & Aramco compliant)
+Sub-Categories & Products:
+
+Chain Link Fence Systems (compound, industrial, residential)
+Welded Mesh Fence Panels (industrial, civil, factories, homes)
+Security Mesh Fence (high-security, anti-climb, maximum privacy)
+Heras Temporary Fencing (events, construction sites – quick assemble/disassemble)
+Gates & Automation (Swing, Sliding, Electric Sliding Gates)
+
+Key Services: Design → Manufacturing → Installation → Automation
+Certifications: HCIS, Aramco vendor, ISO
+Target: Residential, Commercial, Industrial, Aramco projects
+WhatsApp Flow Tip: After selection → show 5 buttons for each fence type → “Request Quotation” or “See Gallery”
+2. Gabion Solutions – https://www.hitechgabion.com/
+Main Category: Gabion Boxes, Walls & Erosion Control Systems
+Sub-Categories & Products:
+
+Gabion Boxes & Baskets
+Gabion Mattresses
+Gabion Retaining Walls
+Gabion Planters & Architectural Features
+Welded Gabions
+Gabion Barriers (military/defense, flood protection)
+
+Key Services: Custom design, installation, engineering support
+Certifications: ASTM A974, A975, A641, A-90, A-185
+Applications: Retaining walls, erosion control, landscaping, landscaping, government projects, military
+Target: Infrastructure, Government, Landscaping, Residential/Commercial gardens
+WhatsApp Flow Tip: Buttons for “Retaining Walls”, “Erosion Control”, “Landscaping”, “Military/Defense”
+3. UPVC Doors & Windows – https://maskni.sa/ (Maskni Alzaki)
+Main Category: Premium UPVC Windows, Doors & WPC Solutions
+Focus: Stylish, energy-efficient home & building transformation
+Products: UPVC windows & doors (residential & commercial), WPC profiles
+Key Features: Modern design, durability in KSA climate, thermal insulation
+Target: Residential villas, commercial buildings, real-estate developers
+WhatsApp Flow Tip: Simple 3-button menu → “Windows”, “Doors”, “Full Façade Solutions” → photo gallery + quote request
+4. Security Barriers & Access Control – https://www.hitechbarrier.com/
+Main Category: Road Safety, Traffic & Perimeter Access Control Barriers
+Sub-Categories & Products:
+
+Automatic Barriers (boom barriers)
+Pedestrian Barriers
+Advertising Barriers
+Solar-Powered Gates (Instaboom, Sosec)
+Smart Barriers (Parklio – smartphone control, digital keys)
+FAAC Barriers (high-traffic, heavy-duty)
+
+Key Features: Solar-powered options, crash-rated, remote monitoring
+Target: Highways, airports, ports, industrial perimeters, parking, government facilities
+WhatsApp Flow Tip: “Automatic Boom Barriers”, “Smart Solar Gates”, “Pedestrian Control”, “High-Security Solutions”
+5. Spin Galvanizing & Steel Basics – https://hitechbasics.com/
+Main Category: Precision Spin Galvanizing for Small Steel Parts (<3kg)
+Products & Services:
+
+Hot-dip spin galvanizing (fasteners, bolts, nuts, clamps, brackets, earth rods, cable accessories, pipe supports, solar mounts, etc.)
+Galvanized cable tray systems & supports
+
+Key Features: Thread-safe, uniform coating, 24-48 hr turnaround, ASTM A123/A153 compliant
+Certifications: ISO 9001
+Target: Power & utilities (SEC, Alfanar), infrastructure, solar, water/wastewater, defense, general fabrication
+Unique Selling Point: First dedicated small-parts spin-galvanizing line in KSA
+WhatsApp Flow Tip: “Send your parts list” → file upload + instant quote flow
+6. Racks & Partitions – https://www.racksandpartition.com/
+Main Category: Industrial Storage & Space Division Systems (Made in KSA)
+Sub-Categories & Products:
+
+Storage Racks & Heavy-Duty Shelving
+Commercial & Retail Racking
+Office Partitions
+Warehouse & Industrial Partitions
+Custom Dividers & Shelving Systems
+
+Key Features: Adjustable, space-optimizing, lockable, safety-focused
+Target: Warehouses, factories, offices, retail, logistics
+WhatsApp Flow Tip: “Warehouse Racking”, “Office Partitions”, “Retail Shelving”, “Custom Design”
+7. Smart Solutions & Automatic Toilets – https://hitechesmart.com/
+Main Category: Smart Public Toilet Systems & Bathroom Safety
+Sub-Categories & Products:
+
+Automatic Self-Cleaning Public Toilets (SMART® & PLUS® technology)
+Remote-monitored cleaning systems
+Basic manual + fully automated models
+Smart toilet safety rails (bathroom safety)
+
+Key Features: Designed in Italy (Toilitech partner), fully automated cleaning, remote monitoring
+Applications: Tourism, municipalities, transport hubs, malls, hospitals, smart cities
+Target: Government, Municipalities, Smart City projects, B2B
+WhatsApp Flow Tip: “Public Toilet Solutions”, “Smart Safety Rails”, “Integration with Smart Cities”
