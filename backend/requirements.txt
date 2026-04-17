@@ -1,0 +1,47 @@
+# FastAPI & Server
+fastapi
+uvicorn[standard]
+python-multipart
+pydantic
+pydantic-settings
+
+# MongoDB
+motor
+pymongo
+
+# Pinecone Vector Store
+pinecone-client
+pinecone-plugin-interface
+
+# LangChain & LangGraph
+langchain
+langchain-core
+langchain-community
+langchain-google-genai
+langgraph
+
+# Embeddings - BGE-M3
+FlagEmbedding
+torch
+numpy
+
+# Web Scraping
+beautifulsoup4
+requests
+urllib3
+
+# Utilities
+python-dotenv
+uuid-utils
+typing-extensions
+
+# Google Gemini
+google-generativeai
+google-ai-generativelanguage
+
+# CORS
+starlette
+
+# Production
+httpx
+aiohttp
