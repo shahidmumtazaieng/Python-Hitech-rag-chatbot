@@ -9,13 +9,14 @@ pydantic-settings
 asyncpg
 sqlalchemy
 alembic
+psycopg2-binary
 
 # MongoDB (keeping for potential future use)
 motor
 pymongo
 
 # Pinecone Vector Store
-pinecone
+pinecone-client
 pinecone-plugin-interface
 
 # LangChain & LangGraph
@@ -25,9 +26,10 @@ langchain-community
 langchain-google-genai
 langgraph
 
-# Embeddings - BGE-M3
-FlagEmbedding
+# Embeddings - sentence-transformers (all-MiniLM-L6-v2, 384-dim)
+sentence-transformers
 torch
+torchvision
 numpy
 
 # Web Scraping
@@ -37,7 +39,6 @@ urllib3
 
 # Utilities
 python-dotenv
-uuid-utils
 typing-extensions
 
 # Google Gemini
@@ -50,3 +51,6 @@ starlette
 # Production
 httpx
 aiohttp
+
+# Testing & Development
+streamlit
