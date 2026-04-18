@@ -16,7 +16,7 @@ motor
 pymongo
 
 # Pinecone Vector Store
-pinecone-client
+pinecone
 pinecone-plugin-interface
 
 # LangChain & LangGraph
@@ -29,7 +29,7 @@ groq
 langgraph
 
 # Embeddings - sentence-transformers (all-MiniLM-L6-v2, 384-dim)
-sentence-transformers==3.3.1
+sentence-transformers
 torch
 torchvision
 numpy
