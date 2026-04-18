@@ -5,6 +5,7 @@ from pinecone import Pinecone, ServerlessSpec
 
 from app.config import get_settings
 from app.services.embedding_service import get_embedding_service
+from app.services.hf_embedding_service import get_hf_embedding_service
 
 
 class PineconeService:
@@ -29,38 +30,55 @@ class PineconeService:
         if self._initialized:
             return
         
-        # Initialize Pinecone client
-        client_kwargs = {
-            'api_key': self.settings.PINECONE_API_KEY
-        }
-        if self.settings.PINECONE_ENVIRONMENT:
-            client_kwargs['environment'] = self.settings.PINECONE_ENVIRONMENT
-        if self.settings.PINECONE_HOST:
-            client_kwargs['host'] = self.settings.PINECONE_HOST
-        
-        self.pc = Pinecone(**client_kwargs)
-        
-        # Check if index exists, create if not
-        index_name = self.settings.PINECONE_INDEX_NAME
-        existing_indexes = [idx.name for idx in self.pc.list_indexes()]
-        
-        if index_name not in existing_indexes:
-            print(f"Creating Pinecone index: {index_name}")
-            self.pc.create_index(
-                name=index_name,
-                dimension=self.settings.PINECONE_DIMENSION,
-                metric="cosine",
-                spec=ServerlessSpec(
-                    cloud="aws",
-                    region="us-east-1"
-                )
+        try:
+            print(f"Initializing Pinecone...")
+            
+            # Initialize Pinecone client (new API doesn't need environment)
+            self.pc = Pinecone(
+                api_key=self.settings.PINECONE_API_KEY,
+                host=self.settings.PINECONE_HOST if self.settings.PINECONE_HOST else None
             )
-            print(f"Index {index_name} created successfully")
-        
-        # Connect to index
-        self.index = self.pc.Index(index_name)
-        self._initialized = True
-        print(f"Connected to Pinecone index: {index_name}")
+            
+            # Check if index exists
+            index_name = self.settings.PINECONE_INDEX_NAME
+            print(f"Checking for index: {index_name}")
+            
+            try:
+                existing_indexes = [idx.name for idx in self.pc.list_indexes()]
+                
+                if index_name not in existing_indexes:
+                    print(f"Index '{index_name}' not found. Creating new index...")
+                    self.pc.create_index(
+                        name=index_name,
+                        dimension=self.settings.PINECONE_DIMENSION,
+                        metric="cosine",
+                        spec=ServerlessSpec(
+                            cloud="aws",
+                            region="us-east-1"
+                        )
+                    )
+                    print(f"✅ Index '{index_name}' created successfully")
+                    
+                    # Wait for index to be ready
+                    import time
+                    print("Waiting for index to be ready...")
+                    time.sleep(10)
+                else:
+                    print(f"✅ Index '{index_name}' already exists")
+            except Exception as e:
+                print(f"⚠️ Warning: Could not list/create index: {e}")
+                print("Continuing anyway - index may already exist...")
+            
+            # Connect to index
+            self.index = self.pc.Index(index_name)
+            self._initialized = True
+            print(f"✅ Connected to Pinecone index: {index_name}")
+            
+        except Exception as e:
+            print(f"❌ Pinecone initialization failed: {e}")
+            print(f"Using mock mode - vector operations will be simulated")
+            self._initialized = True  # Set to True to allow app to continue
+            self.index = None
     
     def ensure_initialized(self):
         """Ensure service is initialized."""
@@ -118,7 +136,8 @@ class PineconeService:
         query: str,
         top_k: int = 5,
         filter_dict: Optional[Dict] = None,
-        include_metadata: bool = True
+        include_metadata: bool = True,
+        use_hf_api: bool = True
     ) -> List[Dict[str, Any]]:
         """
         Perform similarity search.
@@ -128,15 +147,30 @@ class PineconeService:
             top_k: Number of results to return
             filter_dict: Optional metadata filter
             include_metadata: Whether to include metadata in results
+            use_hf_api: Use Hugging Face API for query embeddings (fast, high quality)
             
         Returns:
             List of matching documents with scores
         """
         self.ensure_initialized()
         
-        # Generate query embedding
-        embedding_service = get_embedding_service()
-        query_embedding = embedding_service.embed_query(query)
+        # Handle mock mode (Pinecone not connected)
+        if self.index is None:
+            print(f"[Pinecone] Mock mode - returning empty results for: {query[:50]}...")
+            return []
+        
+        # Generate query embedding using HF API (fast) or local model (fallback)
+        if use_hf_api:
+            try:
+                hf_service = get_hf_embedding_service()
+                query_embedding = hf_service.embed_query_with_instruction(query, task="search")
+            except Exception as e:
+                print(f"[Pinecone] HF API failed, using local embedding: {e}")
+                embedding_service = get_embedding_service()
+                query_embedding = embedding_service.embed_query(query)
+        else:
+            embedding_service = get_embedding_service()
+            query_embedding = embedding_service.embed_query(query)
         
         # Query index
         results = self.index.query(
