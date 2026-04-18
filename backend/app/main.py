@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.services.mongodb_service import mongodb_service
+from app.services.postgresql_service import postgresql_service
 from app.services.pinecone_service import pinecone_service
 from app.services.embedding_service import embedding_service
 from app.routers import lead_router, chat_router, ingest_router
@@ -18,11 +18,15 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     print(f"Starting {settings.APP_NAME}...")
     
-    # Connect to MongoDB
-    await mongodb_service.connect()
+    # Connect to PostgreSQL
+    await postgresql_service.connect()
     
-    # Initialize Pinecone
-    pinecone_service.initialize()
+    # Initialize Pinecone (optional for testing)
+    try:
+        pinecone_service.initialize()
+        print("Pinecone initialized successfully!")
+    except Exception as e:
+        print(f"Pinecone initialization failed (continuing for testing): {e}")
     
     # Load embedding model (singleton)
     _ = embedding_service
@@ -33,7 +37,7 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     print("Shutting down...")
-    await mongodb_service.disconnect()
+    await postgresql_service.disconnect()
 
 
 def create_app() -> FastAPI:
@@ -74,13 +78,21 @@ def create_app() -> FastAPI:
     @app.get("/api/health")
     async def health_check():
         """Health check endpoint."""
-        return {
-            "status": "healthy",
-            "services": {
-                "mongodb": "connected" if mongodb_service.db else "disconnected",
-                "pinecone": "connected" if pinecone_service._initialized else "disconnected"
+        try:
+            postgresql_status = "connected" if postgresql_service.engine else "disconnected"
+            pinecone_status = "connected" if getattr(pinecone_service, "_initialized", False) else "disconnected"
+            return {
+                "status": "healthy",
+                "services": {
+                    "postgresql": postgresql_status,
+                    "pinecone": pinecone_status
+                }
             }
-        }
+        except Exception as e:
+            return JSONResponse(
+                status_code=500,
+                content={"status": "error", "detail": str(e)}
+            )
     
     return app
 

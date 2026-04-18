@@ -30,7 +30,15 @@ class PineconeService:
             return
         
         # Initialize Pinecone client
-        self.pc = Pinecone(api_key=self.settings.PINECONE_API_KEY)
+        client_kwargs = {
+            'api_key': self.settings.PINECONE_API_KEY
+        }
+        if self.settings.PINECONE_ENVIRONMENT:
+            client_kwargs['environment'] = self.settings.PINECONE_ENVIRONMENT
+        if self.settings.PINECONE_HOST:
+            client_kwargs['host'] = self.settings.PINECONE_HOST
+        
+        self.pc = Pinecone(**client_kwargs)
         
         # Check if index exists, create if not
         index_name = self.settings.PINECONE_INDEX_NAME

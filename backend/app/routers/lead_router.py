@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException, Depends
 from fastapi.responses import JSONResponse
 
 from app.models.lead import LeadCreate, LeadResponse
-from app.services.mongodb_service import MongoDBService, get_mongodb_service
+from app.services.postgresql_service import PostgreSQLService, get_postgresql_service
 
 router = APIRouter(prefix="/api", tags=["leads"])
 
@@ -11,7 +11,7 @@ router = APIRouter(prefix="/api", tags=["leads"])
 @router.post("/lead", response_model=LeadResponse)
 async def submit_lead(
     lead: LeadCreate,
-    mongodb: MongoDBService = Depends(get_mongodb_service)
+    postgresql: PostgreSQLService = Depends(get_postgresql_service)
 ) -> LeadResponse:
     """
     Submit a new lead and create a chat session.
@@ -23,7 +23,7 @@ async def submit_lead(
     """
     try:
         # Check if email already exists with active session
-        existing = await mongodb.get_lead_by_email(lead.email)
+        existing = await postgresql.get_lead_by_email(lead.email)
         if existing:
             # Return existing session
             return LeadResponse(
@@ -34,7 +34,7 @@ async def submit_lead(
             )
         
         # Create new lead
-        result = await mongodb.create_lead(lead)
+        result = await postgresql.create_lead(lead)
         return result
         
     except Exception as e:
@@ -47,10 +47,10 @@ async def submit_lead(
 @router.get("/lead/{session_id}")
 async def get_lead(
     session_id: str,
-    mongodb: MongoDBService = Depends(get_mongodb_service)
+    postgresql: PostgreSQLService = Depends(get_postgresql_service)
 ):
     """Get lead information by session ID."""
-    lead = await mongodb.get_lead_by_session(session_id)
+    lead = await postgresql.get_lead_by_session(session_id)
     if not lead:
         raise HTTPException(status_code=404, detail="Lead not found")
     return lead

@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import { Phone, X, MessageCircle } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Phone, X, MessageCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LeadForm } from "./LeadForm";
 import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
-import { submitLead, sendMessage, talkToHuman, LeadData } from "@/lib/api";
-
-interface Message {
-  role: "user" | "assistant";
-  content: string;
-  timestamp?: string;
-}
+import { 
+  submitLead, 
+  sendMessage, 
+  talkToHuman, 
+  restoreSession,
+  checkSession,
+  LeadData,
+  Message 
+} from "@/lib/api";
 
 interface ChatWidgetProps {
   isOpen?: boolean;
@@ -32,35 +34,101 @@ export function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRestoring, setIsRestoring] = useState(false);
   const [isEscalated, setIsEscalated] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Load session from localStorage on mount
-  useEffect(() => {
-    const saved = localStorage.getItem(SESSION_KEY);
-    if (saved) {
-      try {
-        const sessionData = JSON.parse(saved);
-        const age = Date.now() - (sessionData.timestamp || 0);
-        
-        if (age < SESSION_TTL && sessionData.sessionId) {
-          setSessionId(sessionData.sessionId);
-          setLeadInfo(sessionData.leadInfo);
-          setHasSubmittedLead(true);
-          if (sessionData.messages) {
-            setMessages(sessionData.messages);
-          }
-        } else {
-          localStorage.removeItem(SESSION_KEY);
-        }
-      } catch (e) {
-        console.error("Failed to load session:", e);
+  // Convert API messages to local format
+  const convertApiMessages = (apiMessages: any[]): Message[] => {
+    return apiMessages.map(msg => ({
+      role: msg.role as "user" | "assistant" | "system",
+      content: msg.content,
+      timestamp: msg.timestamp || new Date().toISOString(),
+      sources: msg.sources,
+      metadata: msg.metadata,
+    }));
+  };
+
+  // Restore session from backend
+  const restoreSessionFromBackend = useCallback(async (savedSessionId: string) => {
+    setIsRestoring(true);
+    try {
+      // First check if session is still valid
+      const checkResult = await checkSession(savedSessionId);
+      
+      if (!checkResult.valid) {
+        console.log("Session expired or invalid, clearing localStorage");
+        localStorage.removeItem(SESSION_KEY);
+        setIsRestoring(false);
+        return false;
       }
+
+      // Restore full session with messages
+      const result = await restoreSession(savedSessionId);
+      
+      if (result.success && result.sessionId) {
+        setSessionId(result.sessionId);
+        setLeadInfo(result.lead);
+        setHasSubmittedLead(true);
+        setIsEscalated(result.isEscalated);
+        
+        if (result.messages && result.messages.length > 0) {
+          setMessages(convertApiMessages(result.messages));
+        }
+        
+        // Update localStorage with fresh data
+        const sessionData = {
+          sessionId: result.sessionId,
+          leadInfo: result.lead,
+          messages: result.messages,
+          timestamp: Date.now(),
+        };
+        localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+        
+        console.log("Session restored successfully:", result.sessionId);
+        return true;
+      } else {
+        console.log("Session restoration failed:", result.message);
+        localStorage.removeItem(SESSION_KEY);
+        return false;
+      }
+    } catch (error) {
+      console.error("Failed to restore session:", error);
+      localStorage.removeItem(SESSION_KEY);
+      return false;
+    } finally {
+      setIsRestoring(false);
     }
   }, []);
 
+  // Load session from localStorage on mount and validate with backend
+  useEffect(() => {
+    const initSession = async () => {
+      const saved = localStorage.getItem(SESSION_KEY);
+      if (saved) {
+        try {
+          const sessionData = JSON.parse(saved);
+          const age = Date.now() - (sessionData.timestamp || 0);
+          
+          if (age < SESSION_TTL && sessionData.sessionId) {
+            // Validate and restore from backend
+            await restoreSessionFromBackend(sessionData.sessionId);
+          } else {
+            console.log("Local session expired, clearing");
+            localStorage.removeItem(SESSION_KEY);
+          }
+        } catch (e) {
+          console.error("Failed to load session:", e);
+          localStorage.removeItem(SESSION_KEY);
+        }
+      }
+    };
+    
+    initSession();
+  }, [restoreSessionFromBackend]);
+
   // Save session to localStorage
-  const saveSession = () => {
+  const saveSession = useCallback(() => {
     if (sessionId && leadInfo) {
       const sessionData = {
         sessionId,
@@ -70,11 +138,11 @@ export function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }
       };
       localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
     }
-  };
+  }, [sessionId, leadInfo, messages]);
 
   useEffect(() => {
     saveSession();
-  }, [messages, sessionId, leadInfo]);
+  }, [saveSession]);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -99,9 +167,17 @@ export function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }
           },
         ]);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to submit lead:", error);
-      alert("Failed to submit. Please try again.");
+      const errorMessage = error?.response?.data?.detail 
+        || error?.message 
+        || "Failed to submit. Please try again.";
+      
+      if (errorMessage.includes("Network Error")) {
+        alert("Cannot connect to server. Please make sure the backend is running on http://127.0.0.1:8000");
+      } else {
+        alert(errorMessage);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -179,6 +255,16 @@ export function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }
 
   // Widget content
   const renderContent = () => {
+    // Show loading while restoring session
+    if (isRestoring) {
+      return (
+        <div className="flex-1 flex flex-col items-center justify-center p-8">
+          <Loader2 className="w-8 h-8 animate-spin text-[#E30613] mb-4" />
+          <p className="text-gray-600 text-sm">Restoring your conversation...</p>
+        </div>
+      );
+    }
+
     if (!hasSubmittedLead) {
       return (
         <div className="p-4 overflow-y-auto">
@@ -199,9 +285,11 @@ export function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }
               </p>
             </div>
           )}
-          {messages.map((message, index) => (
-            <MessageBubble key={index} message={message} />
-          ))}
+          {messages
+            .filter(msg => msg.role !== "system")
+            .map((message, index) => (
+              <MessageBubble key={index} message={message} />
+            ))}
           {isTyping && <TypingIndicator />}
           <div ref={messagesEndRef} />
         </div>

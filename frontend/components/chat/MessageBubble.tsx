@@ -1,10 +1,10 @@
 "use client";
 
-import { User, Bot } from "lucide-react";
+import { User, Bot, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Message {
-  role: "user" | "assistant";
+  role: "user" | "assistant" | "system";
   content: string;
   timestamp?: string;
 }
@@ -15,6 +15,7 @@ interface MessageBubbleProps {
 
 export function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === "user";
+  const isSystem = message.role === "system";
   
   const formatTime = () => {
     if (!message.timestamp) {
@@ -39,6 +40,18 @@ export function MessageBubble({ message }: MessageBubbleProps) {
       '<a href="$1" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-300">$1</a>'
     );
   };
+
+  // System messages are rendered differently (centered, smaller)
+  if (isSystem) {
+    return (
+      <div className="flex justify-center my-2">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-500">
+          <Info className="w-3 h-3" />
+          <span dangerouslySetInnerHTML={{ __html: formatContent(message.content) }} />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

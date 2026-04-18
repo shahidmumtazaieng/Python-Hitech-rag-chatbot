@@ -1,0 +1,20 @@
+{
+  "name": "whatsapp-qr-test",
+  "version": "1.0.0",
+  "description": "WhatsApp QR Code Testing for Hi-Tech Flow",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "whatsapp-web.js": "^1.23.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "keywords": ["whatsapp", "qr", "test", "flow"],
+  "author": "Hi-Tech Industrial Group",
+  "license": "MIT"
+}

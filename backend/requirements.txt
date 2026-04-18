@@ -5,7 +5,12 @@ python-multipart
 pydantic
 pydantic-settings
 
-# MongoDB
+# PostgreSQL
+asyncpg
+sqlalchemy
+alembic
+
+# MongoDB (keeping for potential future use)
 motor
 pymongo
 

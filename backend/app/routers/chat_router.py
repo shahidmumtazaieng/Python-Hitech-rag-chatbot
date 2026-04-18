@@ -1,18 +1,49 @@
 """Chat router for message handling."""
 from fastapi import APIRouter, HTTPException, Depends
+from pydantic import BaseModel, Field
+from typing import Optional, List, Dict, Any
 
 from app.models.chat import ChatRequest, ChatResponse, TalkToHumanRequest, TalkToHumanResponse
 from app.models.conversation import MessageRole
-from app.services.mongodb_service import MongoDBService, get_mongodb_service
+from app.services.postgresql_service import PostgreSQLService, get_postgresql_service
 from app.services.rag_service import RAGService, get_rag_service
 
 router = APIRouter(prefix="/api", tags=["chat"])
 
 
+# Request/Response models for session management
+class SessionRestoreRequest(BaseModel):
+    """Request to restore a session."""
+    sessionId: str = Field(..., description="Session identifier to restore")
+
+
+class SessionRestoreResponse(BaseModel):
+    """Response for session restoration."""
+    success: bool
+    sessionId: Optional[str] = None
+    lead: Optional[Dict[str, Any]] = None
+    messages: List[Dict[str, Any]] = []
+    isEscalated: bool = False
+    message: str = ""
+
+
+class SessionCheckRequest(BaseModel):
+    """Request to check session validity."""
+    sessionId: str = Field(..., description="Session identifier to check")
+
+
+class SessionCheckResponse(BaseModel):
+    """Response for session check."""
+    valid: bool
+    sessionId: Optional[str] = None
+    lead: Optional[Dict[str, Any]] = None
+    expiresAt: Optional[str] = None
+
+
 @router.post("/chat/sync", response_model=ChatResponse)
 async def chat_sync(
     request: ChatRequest,
-    mongodb: MongoDBService = Depends(get_mongodb_service),
+    postgresql: PostgreSQLService = Depends(get_postgresql_service),
     rag: RAGService = Depends(get_rag_service)
 ) -> ChatResponse:
     """
@@ -26,7 +57,7 @@ async def chat_sync(
     """
     try:
         # Validate session
-        lead = await mongodb.get_lead_by_session(request.sessionId)
+        lead = await postgresql.get_lead_by_session(request.sessionId)
         if not lead:
             raise HTTPException(
                 status_code=404,
@@ -34,7 +65,7 @@ async def chat_sync(
             )
         
         # Check if conversation is escalated
-        conversation = await mongodb.get_conversation(request.sessionId)
+        conversation = await postgresql.get_conversation(request.sessionId)
         if conversation and conversation.get('isEscalated'):
             return ChatResponse(
                 response="This conversation has been escalated to a human representative. They will contact you shortly.",
@@ -58,7 +89,7 @@ async def chat_sync(
 @router.post("/talk-to-human", response_model=TalkToHumanResponse)
 async def talk_to_human(
     request: TalkToHumanRequest,
-    mongodb: MongoDBService = Depends(get_mongodb_service),
+    postgresql: PostgreSQLService = Depends(get_postgresql_service),
     rag: RAGService = Depends(get_rag_service)
 ) -> TalkToHumanResponse:
     """
@@ -70,7 +101,7 @@ async def talk_to_human(
     """
     try:
         # Validate session
-        lead = await mongodb.get_lead_by_session(request.sessionId)
+        lead = await postgresql.get_lead_by_session(request.sessionId)
         if not lead:
             raise HTTPException(
                 status_code=404,
@@ -82,7 +113,7 @@ async def talk_to_human(
         full_notes = f"{request.notes or ''}\n\n{summary}".strip()
         
         # Escalate conversation
-        success = await mongodb.escalate_to_human(
+        success = await postgresql.escalate_to_human(
             request.sessionId,
             notes=full_notes
         )
@@ -94,7 +125,7 @@ async def talk_to_human(
             )
         
         # Add system message about escalation
-        await mongodb.add_message(
+        await postgresql.add_message(
             session_id=request.sessionId,
             role=MessageRole.SYSTEM,
             content="Conversation escalated to human agent.",
@@ -117,13 +148,104 @@ async def talk_to_human(
         )
 
 
+@router.post("/session/restore", response_model=SessionRestoreResponse)
+async def restore_session(
+    request: SessionRestoreRequest,
+    rag: RAGService = Depends(get_rag_service)
+) -> SessionRestoreResponse:
+    """
+    Restore a previous chat session.
+    
+    - Validates session exists and is not expired
+    - Returns lead info and conversation history
+    - Allows user to continue without re-submitting lead form
+    """
+    try:
+        session_data = await rag.restore_session(request.sessionId)
+        
+        if not session_data:
+            return SessionRestoreResponse(
+                success=False,
+                message="Session not found or expired. Please submit the lead form again."
+            )
+        
+        conversation = session_data.get('conversation', {})
+        
+        return SessionRestoreResponse(
+            success=True,
+            sessionId=request.sessionId,
+            lead=session_data['lead'],
+            messages=session_data.get('messages', []),
+            isEscalated=conversation.get('isEscalated', False) if conversation else False,
+            message="Session restored successfully. Welcome back!"
+        )
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Session restoration error: {str(e)}"
+        )
+
+
+@router.post("/session/check", response_model=SessionCheckResponse)
+async def check_session(
+    request: SessionCheckRequest,
+    postgresql: PostgreSQLService = Depends(get_postgresql_service)
+) -> SessionCheckResponse:
+    """
+    Check if a session is valid and get basic info.
+    
+    Used by frontend to check localStorage session on app load.
+    """
+    try:
+        is_valid = await postgresql.check_session_valid(request.sessionId)
+        
+        if not is_valid:
+            return SessionCheckResponse(
+                valid=False,
+                sessionId=request.sessionId
+            )
+        
+        lead = await postgresql.get_lead_by_session(request.sessionId)
+        
+        if not lead:
+            return SessionCheckResponse(
+                valid=False,
+                sessionId=request.sessionId
+            )
+        
+        # Calculate expiration (24 hours from creation)
+        created_at = lead.get('createdAt')
+        expires_at = None
+        if created_at:
+            from datetime import datetime, timedelta
+            if isinstance(created_at, str):
+                created_at = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+            expires_at = (created_at + timedelta(hours=24)).isoformat()
+        
+        return SessionCheckResponse(
+            valid=True,
+            sessionId=request.sessionId,
+            lead=lead,
+            expiresAt=expires_at
+        )
+        
+    except Exception as e:
+        return SessionCheckResponse(
+            valid=False,
+            sessionId=request.sessionId
+        )
+
+
 @router.get("/conversation/{session_id}")
 async def get_conversation(
     session_id: str,
-    mongodb: MongoDBService = Depends(get_mongodb_service)
+    postgresql: PostgreSQLService = Depends(get_postgresql_service)
 ):
     """Get conversation history by session ID."""
-    conversation = await mongodb.get_conversation(session_id)
-    if not conversation:
+    summary = await postgresql.get_lead_conversation_summary(session_id)
+    
+    if not summary.get('lead'):
         raise HTTPException(status_code=404, detail="Conversation not found")
-    return conversation
+    
+    return summary

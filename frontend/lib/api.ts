@@ -1,13 +1,15 @@
 // API client for Hitech Chatbot backend
 import axios from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+// Use local proxy to avoid CORS issues
+const API_URL = typeof window !== 'undefined' ? '/api' : (process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000');
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+  timeout: 30000, // 30 second timeout
 });
 
 // Types
@@ -57,6 +59,75 @@ export interface TalkToHumanResponse {
   ticketId?: string;
 }
 
+export interface Message {
+  id?: string;
+  role: 'user' | 'assistant' | 'system';
+  content: string;
+  sources?: Array<{
+    content: string;
+    source: string;
+    title?: string;
+    score?: number;
+  }>;
+  metadata?: Record<string, any>;
+  timestamp?: string;
+}
+
+export interface SessionRestoreRequest {
+  sessionId: string;
+}
+
+export interface SessionRestoreResponse {
+  success: boolean;
+  sessionId?: string;
+  lead?: LeadData & { 
+    sessionId: string; 
+    createdAt: string;
+    status?: string;
+    source?: string;
+  };
+  messages: Message[];
+  isEscalated: boolean;
+  message: string;
+}
+
+export interface SessionCheckRequest {
+  sessionId: string;
+}
+
+export interface SessionCheckResponse {
+  valid: boolean;
+  sessionId?: string;
+  lead?: LeadData & { 
+    sessionId: string; 
+    createdAt: string;
+    status?: string;
+  };
+  expiresAt?: string;
+}
+
+export interface ConversationSummary {
+  lead: LeadData & { 
+    sessionId: string; 
+    createdAt: string;
+    status?: string;
+    source?: string;
+  };
+  conversation: {
+    id?: string;
+    sessionId: string;
+    isEscalated: boolean;
+    escalationNotes?: string;
+    escalationTime?: string;
+    lastMessageAt?: string;
+    messageCount: number;
+    createdAt: string;
+    updatedAt: string;
+  };
+  messages: Message[];
+  hasActiveSession: boolean;
+}
+
 // API Functions
 export async function submitLead(leadData: LeadData): Promise<LeadResponse> {
   const response = await api.post('/api/lead', leadData);
@@ -79,7 +150,21 @@ export async function talkToHuman(sessionId: string, notes?: string): Promise<Ta
   return response.data;
 }
 
-export async function getConversation(sessionId: string) {
+export async function restoreSession(sessionId: string): Promise<SessionRestoreResponse> {
+  const response = await api.post('/api/session/restore', {
+    sessionId,
+  });
+  return response.data;
+}
+
+export async function checkSession(sessionId: string): Promise<SessionCheckResponse> {
+  const response = await api.post('/api/session/check', {
+    sessionId,
+  });
+  return response.data;
+}
+
+export async function getConversation(sessionId: string): Promise<ConversationSummary> {
   const response = await api.get(`/api/conversation/${sessionId}`);
   return response.data;
 }

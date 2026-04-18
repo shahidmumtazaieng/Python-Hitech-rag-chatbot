@@ -12,13 +12,17 @@ class Settings(BaseSettings):
     DEBUG: bool = False
     BACKEND_URL: str = "http://localhost:8000"
     
-    # MongoDB
-    MONGODB_URI: str = "mongodb://localhost:27017/hitech"
-    MONGODB_DB_NAME: str = "hitech"
+    # PostgreSQL (Neon)
+    DATABASE_URL: str = "postgresql://user:password@localhost:5432/hitech_chatbot"
+    
+    # MongoDB (keeping for potential future use)
+    MONGODB_URI: str = "mongodb://localhost:27017/hitech-chatbot"
+    MONGODB_DB_NAME: str = "hitech-chatbot"
     
     # Pinecone
     PINECONE_API_KEY: str = ""
     PINECONE_ENVIRONMENT: str = "gcp-starter"
+    PINECONE_HOST: Optional[str] = None
     PINECONE_INDEX_NAME: str = "hitech-kb-index"
     PINECONE_DIMENSION: int = 384  # Embedding dimension (all-MiniLM-L6-v2)
     
@@ -27,6 +31,9 @@ class Settings(BaseSettings):
     GEMINI_MODEL: str = "gemini-2.5-flash-preview-05-20"
     GEMINI_TEMPERATURE: float = 0.3
     GEMINI_MAX_TOKENS: int = 2048
+    
+    # Conversation settings
+    MAX_CONVERSATION_HISTORY: int = 10
     
     # RAG Configuration
     RAG_TOP_K: int = 5

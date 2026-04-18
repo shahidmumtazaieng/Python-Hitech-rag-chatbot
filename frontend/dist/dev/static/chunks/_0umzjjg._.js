@@ -726,6 +726,7 @@ __turbopack_context__.s([
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/user.js [app-client] (ecmascript) <export default as User>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bot$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bot$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/bot.js [app-client] (ecmascript) <export default as Bot>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$info$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Info$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/info.js [app-client] (ecmascript) <export default as Info>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/utils.ts [app-client] (ecmascript)");
 "use client";
 ;
@@ -733,6 +734,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$
 ;
 function MessageBubble({ message }) {
     const isUser = message.role === "user";
+    const isSystem = message.role === "system";
     const formatTime = ()=>{
         if (!message.timestamp) {
             return new Date().toLocaleTimeString("en-US", {
@@ -752,6 +754,41 @@ function MessageBubble({ message }) {
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         return content.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-300">$1</a>');
     };
+    // System messages are rendered differently (centered, smaller)
+    if (isSystem) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            className: "flex justify-center my-2",
+            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex items-center gap-2 px-3 py-1.5 bg-gray-100 rounded-full text-xs text-gray-500",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$info$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Info$3e$__["Info"], {
+                        className: "w-3 h-3"
+                    }, void 0, false, {
+                        fileName: "[project]/components/chat/MessageBubble.tsx",
+                        lineNumber: 49,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        dangerouslySetInnerHTML: {
+                            __html: formatContent(message.content)
+                        }
+                    }, void 0, false, {
+                        fileName: "[project]/components/chat/MessageBubble.tsx",
+                        lineNumber: 50,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/chat/MessageBubble.tsx",
+                lineNumber: 48,
+                columnNumber: 9
+            }, this)
+        }, void 0, false, {
+            fileName: "[project]/components/chat/MessageBubble.tsx",
+            lineNumber: 47,
+            columnNumber: 7
+        }, this);
+    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$utils$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["cn"])("flex gap-3 max-w-[85%]", isUser ? "ml-auto flex-row-reverse" : ""),
         children: [
@@ -761,18 +798,18 @@ function MessageBubble({ message }) {
                     className: "w-4 h-4 text-white"
                 }, void 0, false, {
                     fileName: "[project]/components/chat/MessageBubble.tsx",
-                    lineNumber: 57,
+                    lineNumber: 70,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$bot$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Bot$3e$__["Bot"], {
                     className: "w-4 h-4 text-white"
                 }, void 0, false, {
                     fileName: "[project]/components/chat/MessageBubble.tsx",
-                    lineNumber: 59,
+                    lineNumber: 72,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/chat/MessageBubble.tsx",
-                lineNumber: 50,
+                lineNumber: 63,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -785,7 +822,7 @@ function MessageBubble({ message }) {
                         }
                     }, void 0, false, {
                         fileName: "[project]/components/chat/MessageBubble.tsx",
-                        lineNumber: 63,
+                        lineNumber: 76,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -793,19 +830,19 @@ function MessageBubble({ message }) {
                         children: formatTime()
                     }, void 0, false, {
                         fileName: "[project]/components/chat/MessageBubble.tsx",
-                        lineNumber: 72,
+                        lineNumber: 85,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/chat/MessageBubble.tsx",
-                lineNumber: 62,
+                lineNumber: 75,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/chat/MessageBubble.tsx",
-        lineNumber: 44,
+        lineNumber: 57,
         columnNumber: 5
     }, this);
 }
@@ -1001,12 +1038,16 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 "use strict";
 
 __turbopack_context__.s([
+    "checkSession",
+    ()=>checkSession,
     "default",
     ()=>__TURBOPACK__default__export__,
     "getConversation",
     ()=>getConversation,
     "getHealth",
     ()=>getHealth,
+    "restoreSession",
+    ()=>restoreSession,
     "sendMessage",
     ()=>sendMessage,
     "submitLead",
@@ -1014,16 +1055,17 @@ __turbopack_context__.s([
     "talkToHuman",
     ()=>talkToHuman
 ]);
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$polyfills$2f$process$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = /*#__PURE__*/ __turbopack_context__.i("[project]/node_modules/next/dist/build/polyfills/process.js [app-client] (ecmascript)");
 // API client for Hitech Chatbot backend
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/axios/lib/axios.js [app-client] (ecmascript)");
 ;
-const API_URL = ("TURBOPACK compile-time value", "http://localhost:3000") || 'http://localhost:8000';
+// Use local proxy to avoid CORS issues
+const API_URL = ("TURBOPACK compile-time truthy", 1) ? '/api' : "TURBOPACK unreachable";
 const api = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$axios$2f$lib$2f$axios$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"].create({
     baseURL: API_URL,
     headers: {
         'Content-Type': 'application/json'
-    }
+    },
+    timeout: 30000
 });
 async function submitLead(leadData) {
     const response = await api.post('/api/lead', leadData);
@@ -1040,6 +1082,18 @@ async function talkToHuman(sessionId, notes) {
     const response = await api.post('/api/talk-to-human', {
         sessionId,
         notes
+    });
+    return response.data;
+}
+async function restoreSession(sessionId) {
+    const response = await api.post('/api/session/restore', {
+        sessionId
+    });
+    return response.data;
+}
+async function checkSession(sessionId) {
+    const response = await api.post('/api/session/check', {
+        sessionId
     });
     return response.data;
 }
@@ -1068,6 +1122,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$phone$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Phone$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/phone.js [app-client] (ecmascript) <export default as Phone>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/x.js [app-client] (ecmascript) <export default as X>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$message$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MessageCircle$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/message-circle.js [app-client] (ecmascript) <export default as MessageCircle>");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__ = __turbopack_context__.i("[project]/node_modules/lucide-react/dist/esm/icons/loader-circle.js [app-client] (ecmascript) <export default as Loader2>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/ui/button.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$LeadForm$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/chat/LeadForm.tsx [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$MessageBubble$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/chat/MessageBubble.tsx [app-client] (ecmascript)");
@@ -1096,52 +1151,119 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
     const [messages, setMessages] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isTyping, setIsTyping] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isRestoring, setIsRestoring] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isEscalated, setIsEscalated] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const messagesEndRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // Load session from localStorage on mount
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "ChatWidget.useEffect": ()=>{
-            const saved = localStorage.getItem(SESSION_KEY);
-            if (saved) {
-                try {
-                    const sessionData = JSON.parse(saved);
-                    const age = Date.now() - (sessionData.timestamp || 0);
-                    if (age < SESSION_TTL && sessionData.sessionId) {
-                        setSessionId(sessionData.sessionId);
-                        setLeadInfo(sessionData.leadInfo);
-                        setHasSubmittedLead(true);
-                        if (sessionData.messages) {
-                            setMessages(sessionData.messages);
-                        }
-                    } else {
-                        localStorage.removeItem(SESSION_KEY);
-                    }
-                } catch (e) {
-                    console.error("Failed to load session:", e);
+    // Convert API messages to local format
+    const convertApiMessages = (apiMessages)=>{
+        return apiMessages.map((msg)=>({
+                role: msg.role,
+                content: msg.content,
+                timestamp: msg.timestamp || new Date().toISOString(),
+                sources: msg.sources,
+                metadata: msg.metadata
+            }));
+    };
+    // Restore session from backend
+    const restoreSessionFromBackend = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "ChatWidget.useCallback[restoreSessionFromBackend]": async (savedSessionId)=>{
+            setIsRestoring(true);
+            try {
+                // First check if session is still valid
+                const checkResult = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["checkSession"])(savedSessionId);
+                if (!checkResult.valid) {
+                    console.log("Session expired or invalid, clearing localStorage");
+                    localStorage.removeItem(SESSION_KEY);
+                    setIsRestoring(false);
+                    return false;
                 }
+                // Restore full session with messages
+                const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["restoreSession"])(savedSessionId);
+                if (result.success && result.sessionId) {
+                    setSessionId(result.sessionId);
+                    setLeadInfo(result.lead);
+                    setHasSubmittedLead(true);
+                    setIsEscalated(result.isEscalated);
+                    if (result.messages && result.messages.length > 0) {
+                        setMessages(convertApiMessages(result.messages));
+                    }
+                    // Update localStorage with fresh data
+                    const sessionData = {
+                        sessionId: result.sessionId,
+                        leadInfo: result.lead,
+                        messages: result.messages,
+                        timestamp: Date.now()
+                    };
+                    localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+                    console.log("Session restored successfully:", result.sessionId);
+                    return true;
+                } else {
+                    console.log("Session restoration failed:", result.message);
+                    localStorage.removeItem(SESSION_KEY);
+                    return false;
+                }
+            } catch (error) {
+                console.error("Failed to restore session:", error);
+                localStorage.removeItem(SESSION_KEY);
+                return false;
+            } finally{
+                setIsRestoring(false);
             }
         }
-    }["ChatWidget.useEffect"], []);
-    // Save session to localStorage
-    const saveSession = ()=>{
-        if (sessionId && leadInfo) {
-            const sessionData = {
-                sessionId,
-                leadInfo,
-                messages,
-                timestamp: Date.now()
-            };
-            localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+    }["ChatWidget.useCallback[restoreSessionFromBackend]"], []);
+    // Load session from localStorage on mount and validate with backend
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "ChatWidget.useEffect": ()=>{
+            const initSession = {
+                "ChatWidget.useEffect.initSession": async ()=>{
+                    const saved = localStorage.getItem(SESSION_KEY);
+                    if (saved) {
+                        try {
+                            const sessionData = JSON.parse(saved);
+                            const age = Date.now() - (sessionData.timestamp || 0);
+                            if (age < SESSION_TTL && sessionData.sessionId) {
+                                // Validate and restore from backend
+                                await restoreSessionFromBackend(sessionData.sessionId);
+                            } else {
+                                console.log("Local session expired, clearing");
+                                localStorage.removeItem(SESSION_KEY);
+                            }
+                        } catch (e) {
+                            console.error("Failed to load session:", e);
+                            localStorage.removeItem(SESSION_KEY);
+                        }
+                    }
+                }
+            }["ChatWidget.useEffect.initSession"];
+            initSession();
         }
-    };
+    }["ChatWidget.useEffect"], [
+        restoreSessionFromBackend
+    ]);
+    // Save session to localStorage
+    const saveSession = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useCallback"])({
+        "ChatWidget.useCallback[saveSession]": ()=>{
+            if (sessionId && leadInfo) {
+                const sessionData = {
+                    sessionId,
+                    leadInfo,
+                    messages,
+                    timestamp: Date.now()
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(sessionData));
+            }
+        }
+    }["ChatWidget.useCallback[saveSession]"], [
+        sessionId,
+        leadInfo,
+        messages
+    ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ChatWidget.useEffect": ()=>{
             saveSession();
         }
     }["ChatWidget.useEffect"], [
-        messages,
-        sessionId,
-        leadInfo
+        saveSession
     ]);
     // Scroll to bottom when messages change
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -1173,7 +1295,12 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
             }
         } catch (error) {
             console.error("Failed to submit lead:", error);
-            alert("Failed to submit. Please try again.");
+            const errorMessage = error?.response?.data?.detail || error?.message || "Failed to submit. Please try again.";
+            if (errorMessage.includes("Network Error")) {
+                alert("Cannot connect to server. Please make sure the backend is running on http://127.0.0.1:8000");
+            } else {
+                alert(errorMessage);
+            }
         } finally{
             setIsLoading(false);
         }
@@ -1250,6 +1377,33 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
     };
     // Widget content
     const renderContent = ()=>{
+        // Show loading while restoring session
+        if (isRestoring) {
+            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "flex-1 flex flex-col items-center justify-center p-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$loader$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Loader2$3e$__["Loader2"], {
+                        className: "w-8 h-8 animate-spin text-[#E30613] mb-4"
+                    }, void 0, false, {
+                        fileName: "[project]/components/chat/ChatWidget.tsx",
+                        lineNumber: 262,
+                        columnNumber: 11
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-gray-600 text-sm",
+                        children: "Restoring your conversation..."
+                    }, void 0, false, {
+                        fileName: "[project]/components/chat/ChatWidget.tsx",
+                        lineNumber: 263,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/components/chat/ChatWidget.tsx",
+                lineNumber: 261,
+                columnNumber: 9
+            }, this);
+        }
         if (!hasSubmittedLead) {
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "p-4 overflow-y-auto",
@@ -1258,12 +1412,12 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                     isLoading: isLoading
                 }, void 0, false, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 185,
+                    lineNumber: 271,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                lineNumber: 184,
+                lineNumber: 270,
                 columnNumber: 9
             }, this);
         }
@@ -1280,7 +1434,7 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                     children: "Welcome to Hitech Steel Industries!"
                                 }, void 0, false, {
                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                    lineNumber: 196,
+                                    lineNumber: 282,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1288,38 +1442,38 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                     children: "Hello! I'm your AI assistant. I can help you with information about our steel products, services, and answer any questions you may have."
                                 }, void 0, false, {
                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                    lineNumber: 197,
+                                    lineNumber: 283,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 195,
+                            lineNumber: 281,
                             columnNumber: 13
                         }, this),
-                        messages.map((message, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$MessageBubble$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MessageBubble"], {
+                        messages.filter((msg)=>msg.role !== "system").map((message, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$MessageBubble$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["MessageBubble"], {
                                 message: message
                             }, index, false, {
                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                lineNumber: 203,
-                                columnNumber: 13
+                                lineNumber: 291,
+                                columnNumber: 15
                             }, this)),
                         isTyping && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$TypingIndicator$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["TypingIndicator"], {}, void 0, false, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 205,
+                            lineNumber: 293,
                             columnNumber: 24
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             ref: messagesEndRef
                         }, void 0, false, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 206,
+                            lineNumber: 294,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 193,
+                    lineNumber: 279,
                     columnNumber: 9
                 }, this),
                 !isEscalated && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1334,19 +1488,19 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                 className: "w-4 h-4 mr-2"
                             }, void 0, false, {
                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                lineNumber: 218,
+                                lineNumber: 306,
                                 columnNumber: 15
                             }, this),
                             "Talk to Human"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                        lineNumber: 212,
+                        lineNumber: 300,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 211,
+                    lineNumber: 299,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$chat$2f$ChatInput$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["ChatInput"], {
@@ -1355,7 +1509,7 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                     placeholder: isEscalated ? "Conversation ended - A representative will contact you" : "Type your message..."
                 }, void 0, false, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 225,
+                    lineNumber: 313,
                     columnNumber: 9
                 }, this)
             ]
@@ -1389,17 +1543,17 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                                     d: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                                    lineNumber: 246,
+                                                    lineNumber: 334,
                                                     columnNumber: 21
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                                lineNumber: 245,
+                                                lineNumber: 333,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                                            lineNumber: 244,
+                                            lineNumber: 332,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1409,7 +1563,7 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                                     children: "Hitech Assistant"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                                    lineNumber: 250,
+                                                    lineNumber: 338,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1417,19 +1571,19 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                                     children: "Online"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                                    lineNumber: 251,
+                                                    lineNumber: 339,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                                            lineNumber: 249,
+                                            lineNumber: 337,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                    lineNumber: 243,
+                                    lineNumber: 331,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1439,18 +1593,18 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                         className: "w-5 h-5"
                                     }, void 0, false, {
                                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                                        lineNumber: 258,
+                                        lineNumber: 346,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                                    lineNumber: 254,
+                                    lineNumber: 342,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 242,
+                            lineNumber: 330,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1458,13 +1612,13 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                             children: renderContent()
                         }, void 0, false, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 263,
+                            lineNumber: 351,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 240,
+                    lineNumber: 328,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1474,24 +1628,24 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                         className: "w-6 h-6 text-white"
                     }, void 0, false, {
                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                        lineNumber: 275,
+                        lineNumber: 363,
                         columnNumber: 13
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$message$2d$circle$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__MessageCircle$3e$__["MessageCircle"], {
                         className: "w-6 h-6 text-white"
                     }, void 0, false, {
                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                        lineNumber: 277,
+                        lineNumber: 365,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/chat/ChatWidget.tsx",
-                    lineNumber: 270,
+                    lineNumber: 358,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/chat/ChatWidget.tsx",
-            lineNumber: 237,
+            lineNumber: 325,
             columnNumber: 7
         }, this);
     }
@@ -1516,17 +1670,17 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                 d: "M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
                             }, void 0, false, {
                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                lineNumber: 291,
+                                lineNumber: 379,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/components/chat/ChatWidget.tsx",
-                            lineNumber: 290,
+                            lineNumber: 378,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                        lineNumber: 289,
+                        lineNumber: 377,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1536,7 +1690,7 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                 children: "Hitech Assistant"
                             }, void 0, false, {
                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                lineNumber: 295,
+                                lineNumber: 383,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1544,19 +1698,19 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                                 children: "Online"
                             }, void 0, false, {
                                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                                lineNumber: 296,
+                                lineNumber: 384,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/chat/ChatWidget.tsx",
-                        lineNumber: 294,
+                        lineNumber: 382,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                lineNumber: 288,
+                lineNumber: 376,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1564,17 +1718,17 @@ function ChatWidget({ isOpen: controlledOpen, onClose, embedded = false }) {
                 children: renderContent()
             }, void 0, false, {
                 fileName: "[project]/components/chat/ChatWidget.tsx",
-                lineNumber: 301,
+                lineNumber: 389,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/components/chat/ChatWidget.tsx",
-        lineNumber: 286,
+        lineNumber: 374,
         columnNumber: 5
     }, this);
 }
-_s(ChatWidget, "Z/7dNWOo7+2mveaLmhxetKRl1kc=");
+_s(ChatWidget, "Br+U/p0jmvw/nz0eVkqAWdq1tM4=");
 _c = ChatWidget;
 var _c;
 __turbopack_context__.k.register(_c, "ChatWidget");
