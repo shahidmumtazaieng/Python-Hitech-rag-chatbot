@@ -25,21 +25,24 @@ class HuggingFaceEmbeddingService:
     
     def __init__(self):
         self.settings = get_settings()
+        # Use BGE-M3 API (1024-dim) - matches your Pinecone index
         self.api_url = "https://api-inference.huggingface.co/pipeline/feature-extraction/BAAI/bge-m3"
         self.api_key = os.getenv("HF_API_TOKEN", "")
-        self.dimension = 1024  # BGE-M3 dimension
+        self.dimension = 1024  # BGE-M3 dimension - MUST match Pinecone index
         self._local_fallback = None
         
-        # Initialize local fallback (all-MiniLM-L6-v2) for offline mode
+        # Initialize local fallback - USE BGE-Small if possible, otherwise all-MiniLM
         self._init_local_fallback()
     
     def _init_local_fallback(self):
         """Initialize lightweight local model as fallback."""
         try:
             from sentence_transformers import SentenceTransformer
-            print("Loading local fallback model (all-MiniLM-L6-v2)...")
+            # Note: all-MiniLM-L6-v2 is 384-dim, which WON'T match 1024-dim Pinecone index
+            # This is only for offline testing - HF API should always be used
+            print("Loading local fallback model (all-MiniLM-L6-v2, 384-dim)...")
             self._local_fallback = SentenceTransformer('all-MiniLM-L6-v2', device='cpu')
-            print("Local fallback model loaded")
+            print("⚠️ Local fallback loaded (384-dim) - won't match Pinecone 1024-dim index")
         except Exception as e:
             print(f"Local fallback not available: {e}")
             self._local_fallback = None
