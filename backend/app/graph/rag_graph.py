@@ -148,11 +148,15 @@ CONTEXT:
         ])
 
         try:
+            print(f"[RAG] Generating response with Groq (model: {self.settings.GROQ_MODEL})")
             result = (prompt | self.llm).invoke({"history": history_msgs})
             generation = result.content
+            print(f"[RAG] Response generated successfully ({len(generation)} chars)")
         except Exception as exc:
             print(f"[RAG] Generation error: {exc}")
-            generation = "I apologize, I'm having trouble generating a response. Please try again or click 'Talk to Human'."
+            import traceback
+            traceback.print_exc()
+            generation = f"I apologize, I'm having trouble generating a response. Error: {str(exc)}"
 
         return {**state, "generation": generation, "sources": sources}
 
@@ -177,12 +181,29 @@ CONTEXT:
             "lead_info": lead_info,
             "retries": 0,
         }
-        result = self.graph.invoke(initial)
-        return {
-            "response": result["generation"],
-            "sources": result.get("sources", []),
-            "documents_used": len(result.get("documents", [])),
-        }
+        
+        try:
+            result = self.graph.invoke(initial)
+            
+            # Ensure generation key exists
+            if "generation" not in result:
+                print(f"[RAG] Warning: 'generation' key missing in result. Keys: {result.keys()}")
+                result["generation"] = "I apologize, but I couldn't generate a response. Please try again."
+            
+            return {
+                "response": result.get("generation", "No response generated"),
+                "sources": result.get("sources", []),
+                "documents_used": len(result.get("documents", [])),
+            }
+        except Exception as e:
+            print(f"[RAG] Error during invocation: {e}")
+            import traceback
+            traceback.print_exc()
+            return {
+                "response": f"Error: {str(e)}",
+                "sources": [],
+                "documents_used": 0,
+            }
 
 
 # Singleton

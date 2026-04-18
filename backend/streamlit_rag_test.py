@@ -249,6 +249,16 @@ def process_message(user_input: str) -> Dict[str, Any]:
             lead_info=st.session_state.lead_info
         )
         
+        # Check if result has response
+        if not result or 'response' not in result:
+            return {
+                "response": "Error: No response received from RAG pipeline",
+                "sources": [],
+                "documents_used": 0,
+                "success": False,
+                "error": "Missing response key"
+            }
+        
         # Update conversation history
         st.session_state.conversation_history.append({
             "role": "user",
@@ -256,19 +266,23 @@ def process_message(user_input: str) -> Dict[str, Any]:
         })
         st.session_state.conversation_history.append({
             "role": "assistant",
-            "content": result['generation']
+            "content": result['response']  # Changed from 'generation' to 'response'
         })
         
         # Keep only last 10 messages for context
         st.session_state.conversation_history = st.session_state.conversation_history[-10:]
         
         return {
-            "response": result['generation'],
+            "response": result['response'],
             "sources": result.get('sources', []),
             "documents_used": result.get('documents_used', 0),
             "success": True
         }
     except Exception as e:
+        import traceback
+        error_details = traceback.format_exc()
+        print(f"[Streamlit] Error processing message: {e}")
+        print(error_details)
         return {
             "response": f"Error: {str(e)}",
             "sources": [],
