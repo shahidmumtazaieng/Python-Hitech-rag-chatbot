@@ -15,7 +15,7 @@ motor
 pymongo
 
 # Pinecone Vector Store
-pinecone-client
+pinecone
 pinecone-plugin-interface
 
 # LangChain & LangGraph
