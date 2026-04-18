@@ -16,7 +16,7 @@ motor
 pymongo
 
 # Pinecone Vector Store
-pinecone
+pinecone-client
 pinecone-plugin-interface
 
 # LangChain & LangGraph
@@ -24,10 +24,12 @@ langchain
 langchain-core
 langchain-community
 langchain-google-genai
+langchain-groq
+groq
 langgraph
 
 # Embeddings - sentence-transformers (all-MiniLM-L6-v2, 384-dim)
-sentence-transformers
+sentence-transformers==3.3.1
 torch
 torchvision
 numpy

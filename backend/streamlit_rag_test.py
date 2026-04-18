@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Streamlit RAG Testing App for Hitech Chatbot
-Tests the RAG pipeline with Gemini 2.5 Flash, Pinecone, and BGE-M3 embeddings
+Tests the RAG pipeline with Groq (Llama 3.1), Pinecone, and BGE-M3 embeddings
 """
 
 import streamlit as st
@@ -154,7 +154,7 @@ def initialize_services():
 def render_header():
     """Render app header."""
     st.markdown('<div class="main-header">🤖 Hitech RAG Test</div>', unsafe_allow_html=True)
-    st.markdown('<div class="sub-header">Test your RAG pipeline with Gemini 2.5 Flash, Pinecone & BGE-M3</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sub-header">Test your RAG pipeline with Groq (Llama 3.1), Pinecone & BGE-M3</div>', unsafe_allow_html=True)
 
 def render_sidebar():
     """Render sidebar with configuration."""
@@ -194,7 +194,7 @@ def render_sidebar():
         st.subheader("🔧 RAG Settings")
         if st.session_state.services_initialized:
             settings = st.session_state.services["settings"]
-            st.text(f"Model: {settings.GEMINI_MODEL}")
+            st.text(f"Model: {settings.GROQ_MODEL} (via Groq)")
             st.text(f"Top-K: {settings.RAG_TOP_K}")
             st.text(f"Threshold: {settings.RAG_SIMILARITY_THRESHOLD}")
         
@@ -428,15 +428,17 @@ def main():
             ### Common Issues:
             
             1. **Missing API Keys**: Ensure your `.env` file has:
-               - `GEMINI_API_KEY`
+               - `GROQ_API_KEY` (from https://console.groq.com/keys)
                - `PINECONE_API_KEY`
-               - `DATABASE_URL` (optional for RAG testing)
+               - `HF_API_TOKEN` (from https://huggingface.co/settings/tokens)
+               - `DATABASE_URL` (for session persistence)
             
             2. **Pinecone Index**: Make sure your Pinecone index exists and has vectors
             
             3. **Python Path**: Run from the backend directory:
                ```bash
                cd backend
+               pip install langchain-groq groq
                streamlit run streamlit_rag_test.py
                ```
             """)
